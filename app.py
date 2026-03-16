@@ -9,6 +9,7 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 TEACHER_DIR = os.path.join(DATA_DIR, "teacher")
 STUDENT_DIR = os.path.join(DATA_DIR, "student")
 KARDEX_DIR = os.path.join(DATA_DIR, "kardex")
+CLASSROOM_DIR = os.path.join(DATA_DIR, "classroom")
 BADGES_FILE = os.path.join(DATA_DIR, "badges.json")
 PROGRESSION_FILE = os.path.join(DATA_DIR, "progression.json")
 
@@ -109,12 +110,14 @@ def _sync_kardex(student: dict) -> None:
 def index():
     teachers = _list_profiles(TEACHER_DIR)
     students = _list_profiles(STUDENT_DIR)
+    classrooms = _list_profiles(CLASSROOM_DIR)
     badges = _load_json(BADGES_FILE).get("badges", [])
     achieved = sum(1 for b in badges if b.get("achieved"))
     return render_template(
         "index.html",
         teachers=teachers,
         students=students,
+        classrooms=classrooms,
         badges=badges,
         achieved=achieved,
     )
@@ -319,6 +322,83 @@ def update_kardex_entry(student_id):
     return redirect(url_for("student_kardex", student_id=student_id))
 
 
+def _parse_optional_int(value: str):
+    """Return int from string, or None if blank/invalid."""
+    value = value.strip()
+    try:
+        return int(value) if value else None
+    except ValueError:
+        return None
+
+
+def _parse_optional_float(value: str):
+    """Return float from string, or None if blank/invalid."""
+    value = value.strip()
+    try:
+        return float(value) if value else None
+    except ValueError:
+        return None
+
+
+# ── classrooms ────────────────────────────────────────────────────────────────
+
+@app.route("/classrooms")
+def classrooms():
+    rooms = _list_profiles(CLASSROOM_DIR)
+    return render_template("classrooms.html", classrooms=rooms)
+
+
+@app.route("/classroom/<classroom_id>")
+def classroom_profile(classroom_id):
+    path = os.path.join(CLASSROOM_DIR, f"{classroom_id}.json")
+    if not os.path.isfile(path):
+        abort(404)
+    room = _load_json(path)
+    return render_template("classroom_profile.html", room=room)
+
+
+@app.route("/classroom/add", methods=["GET", "POST"])
+def add_classroom():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        if not name:
+            return render_template("add_classroom.html", error="Name is required.")
+        classroom_id = _safe_filename(name)
+        path = os.path.join(CLASSROOM_DIR, f"{classroom_id}.json")
+        if os.path.isfile(path):
+            return render_template("add_classroom.html", error="A classroom with that name already exists.")
+        raw_chairs = request.form.get("chairs", "").strip()
+        raw_space = request.form.get("space_sqm", "").strip()
+        _save_json(path, {
+            "id": classroom_id,
+            "name": name,
+            "location_guide": request.form.get("location_guide", "").strip(),
+            "capabilities": request.form.get("capabilities", "").strip(),
+            "space_sqm": _parse_optional_float(raw_space),
+            "chairs": _parse_optional_int(raw_chairs),
+            "description": request.form.get("description", "").strip(),
+        })
+        return redirect(url_for("classroom_profile", classroom_id=classroom_id))
+    return render_template("add_classroom.html", error=None)
+
+
+@app.route("/classroom/<classroom_id>/edit", methods=["GET", "POST"])
+def edit_classroom(classroom_id):
+    path = os.path.join(CLASSROOM_DIR, f"{classroom_id}.json")
+    if not os.path.isfile(path):
+        abort(404)
+    room = _load_json(path)
+    if request.method == "POST":
+        room["chairs"] = _parse_optional_int(request.form.get("chairs", ""))
+        room["space_sqm"] = _parse_optional_float(request.form.get("space_sqm", ""))
+        room["location_guide"] = request.form.get("location_guide", "").strip()
+        room["capabilities"] = request.form.get("capabilities", "").strip()
+        room["description"] = request.form.get("description", "").strip()
+        _save_json(path, room)
+        return redirect(url_for("classroom_profile", classroom_id=classroom_id))
+    return render_template("edit_classroom.html", room=room)
+
+
 # ── badges & progression ──────────────────────────────────────────────────────
 
 @app.route("/badges")
@@ -383,5 +463,11 @@ def api_progression():
     return jsonify(_load_json(PROGRESSION_FILE))
 
 
+@app.route("/api/classrooms")
+def api_classrooms():
+    return jsonify(_list_profiles(CLASSROOM_DIR))
+
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(debug=debug, port=5000)

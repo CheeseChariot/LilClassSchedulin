@@ -1,0 +1,9 @@
+{
+  "id": "room_101",
+  "name": "Room 101",
+  "location_guide": "Building A, ground floor — turn left at the main entrance, third door on the right.",
+  "capabilities": "Projector, whiteboard, air conditioning, Wi-Fi",
+  "space_sqm": 50,
+  "chairs": 30,
+  "description": "General-purpose lecture room suited for theory classes and presentations."
+}

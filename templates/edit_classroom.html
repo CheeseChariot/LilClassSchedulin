@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ room.name }} — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Edit {{ room.name }}</h1>
+  <a href="{{ url_for('classroom_profile', classroom_id=room.id) }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+<div class="card" style="max-width:560px">
+  <form method="post">
+    <div class="form-group">
+      <label for="chairs">Chairs available</label>
+      <input type="number" id="chairs" name="chairs" min="0"
+             value="{{ room.chairs or '' }}" placeholder="e.g. 30">
+    </div>
+    <div class="form-group">
+      <label for="space_sqm">Space (m²)</label>
+      <input type="number" id="space_sqm" name="space_sqm" min="0" step="0.1"
+             value="{{ room.space_sqm or '' }}" placeholder="e.g. 50">
+    </div>
+    <div class="form-group">
+      <label for="capabilities">Capabilities</label>
+      <input type="text" id="capabilities" name="capabilities"
+             value="{{ room.capabilities or '' }}"
+             placeholder="e.g. Projector, whiteboard, Wi-Fi">
+    </div>
+    <div class="form-group">
+      <label for="location_guide">Location guide</label>
+      <input type="text" id="location_guide" name="location_guide"
+             value="{{ room.location_guide or '' }}"
+             placeholder="e.g. Building A, ground floor, third door on the right">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="3">{{ room.description or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
+{% endblock %}

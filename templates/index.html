@@ -13,6 +13,10 @@
     <div class="label">Students</div>
   </div>
   <div class="stat-card">
+    <div class="number">{{ classrooms | length }}</div>
+    <div class="label">Classrooms</div>
+  </div>
+  <div class="stat-card">
     <div class="number">{{ badges | length }}</div>
     <div class="label">Badges</div>
   </div>
@@ -49,6 +53,21 @@
   </div>
   {% else %}
   <p class="muted">No students yet. <a href="{{ url_for('add_student') }}">Add one</a>.</p>
+  {% endfor %}
+</div>
+
+<div class="section-header mt-2">
+  <h2>Classrooms</h2>
+  <a href="{{ url_for('add_classroom') }}" class="btn btn-primary btn-sm">+ Add Classroom</a>
+</div>
+<div class="card-grid">
+  {% for r in classrooms %}
+  <div class="card">
+    <div class="card-title"><a href="{{ url_for('classroom_profile', classroom_id=r.id) }}">{{ r.name }}</a></div>
+    <span class="muted">{{ r.chairs or '—' }} chairs · {{ r.space_sqm or '—' }} m²</span>
+  </div>
+  {% else %}
+  <p class="muted">No classrooms yet. <a href="{{ url_for('add_classroom') }}">Add one</a>.</p>
   {% endfor %}
 </div>
 {% endblock %}

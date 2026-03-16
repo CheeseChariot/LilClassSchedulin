@@ -1,0 +1,9 @@
+{
+  "id": "lab_a",
+  "name": "Lab A",
+  "location_guide": "Building B, second floor — take the stairs at the east end, first room on the left.",
+  "capabilities": "30 workstations, projector, whiteboard, air conditioning, Wi-Fi, 3D printer",
+  "space_sqm": 80,
+  "chairs": 30,
+  "description": "Computer lab with individual workstations for practical and programming sessions."
+}
