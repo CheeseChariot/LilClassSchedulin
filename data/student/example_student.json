@@ -1,0 +1,16 @@
+{
+  "id": "example_student",
+  "name": "Example Student",
+  "career": [
+    {
+      "class_id": "math101",
+      "class_name": "Math 101",
+      "status": "Untaken"
+    },
+    {
+      "class_id": "phys201",
+      "class_name": "Physics 201",
+      "status": "Pass"
+    }
+  ]
+}

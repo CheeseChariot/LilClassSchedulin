@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Badges — LilClassSchedulin{% endblock %}
+{% block content %}
+<h1>Badges</h1>
+<div class="card-grid">
+  {% for badge in badges %}
+  <div class="card">
+    <div class="card-title">
+      {% if badge.achieved %}🏆{% else %}🔒{% endif %}
+      {{ badge.name }}
+      {% if badge.achieved %}<span class="badge badge-achieved">Achieved</span>{% endif %}
+    </div>
+    <p class="muted">{{ badge.description }}</p>
+    {% if badge.requirement %}
+    <p class="muted mt-1"><em>Requirement: {{ badge.requirement }}</em></p>
+    {% endif %}
+    <form method="post" action="{{ url_for('toggle_badge', badge_id=badge.id) }}" class="mt-1">
+      <button type="submit" class="btn btn-secondary btn-sm">
+        {% if badge.achieved %}Mark Unachieved{% else %}Mark Achieved{% endif %}
+      </button>
+    </form>
+  </div>
+  {% else %}
+  <p class="muted">No badges defined.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ teacher.name }} — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>{{ teacher.name }}</h1>
+  <a href="{{ url_for('teachers') }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+
+<div class="section-header">
+  <h2>Classes</h2>
+  <a href="{{ url_for('add_class', teacher_id=teacher.id) }}" class="btn btn-primary btn-sm">+ Add Class</a>
+</div>
+
+{% if teacher.classes %}
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Status</th>
+        <th>Schedule</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cls in teacher.classes %}
+      <tr>
+        <td><strong>{{ cls.name }}</strong></td>
+        <td>
+          {% if cls.status %}
+            <span class="badge badge-{{ cls.status | lower }}">{{ cls.status }}</span>
+          {% else %}
+            <span class="badge badge-null">NULL</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if cls.schedule %}
+            {% for day, time in cls.schedule.items() %}
+              <span class="muted">{{ day | capitalize }}: {{ time }}</span><br>
+            {% endfor %}
+          {% else %}
+            <span class="muted">No schedule</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ url_for('edit_schedule', teacher_id=teacher.id, class_id=cls.id) }}" class="btn btn-secondary btn-sm">Edit Schedule</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="muted">No classes assigned yet.</p>
+{% endif %}
+{% endblock %}

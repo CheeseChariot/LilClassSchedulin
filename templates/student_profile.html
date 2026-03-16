@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ student.name }} — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>{{ student.name }}</h1>
+  <div class="flex">
+    <a href="{{ url_for('student_kardex', student_id=student.id) }}" class="btn btn-primary btn-sm">📋 Kardex</a>
+    <a href="{{ url_for('students') }}" class="btn btn-secondary btn-sm">← Back</a>
+  </div>
+</div>
+
+<div class="section-header">
+  <h2>Career</h2>
+  <a href="{{ url_for('add_student_class', student_id=student.id) }}" class="btn btn-primary btn-sm">+ Add Class</a>
+</div>
+
+{% if student.career %}
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Status</th>
+        <th>Change Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in student.career %}
+      <tr>
+        <td><strong>{{ entry.class_name }}</strong></td>
+        <td>
+          <span class="badge badge-{{ entry.status | lower }}">{{ entry.status }}</span>
+        </td>
+        <td>
+          <form method="post" action="{{ url_for('update_student_career', student_id=student.id) }}" class="flex">
+            <input type="hidden" name="class_id" value="{{ entry.class_id }}">
+            <select name="status">
+              {% for s in statuses %}
+              <option value="{{ s }}" {% if s == entry.status %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="muted">No classes in career yet.</p>
+{% endif %}
+{% endblock %}

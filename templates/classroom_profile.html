@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ room.name }} — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>{{ room.name }}</h1>
+  <div class="flex">
+    <a href="{{ url_for('edit_classroom', classroom_id=room.id) }}" class="btn btn-primary btn-sm">✏ Edit</a>
+    <a href="{{ url_for('classrooms') }}" class="btn btn-secondary btn-sm">← Back</a>
+  </div>
+</div>
+
+<div class="card" style="max-width:680px">
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:160px;color:var(--text-muted)">ID</td>
+        <td><code>{{ room.id }}</code></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text-muted)">Chairs</td>
+        <td>{{ room.chairs or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="color:var(--text-muted)">Space</td>
+        <td>{{ room.space_sqm or '—' }} m²</td>
+      </tr>
+      <tr>
+        <td style="color:var(--text-muted)">Capabilities</td>
+        <td>{{ room.capabilities or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="color:var(--text-muted)">Location guide</td>
+        <td>{{ room.location_guide or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="color:var(--text-muted)">Description</td>
+        <td>{{ room.description or '—' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

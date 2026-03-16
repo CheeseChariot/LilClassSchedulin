@@ -1,0 +1,22 @@
+{
+  "student_id": "example_student",
+  "student_name": "Example Student",
+  "entries": [
+    {
+      "class_id": "math101",
+      "class_name": "Math 101",
+      "status": "Untaken",
+      "grade": null,
+      "period": null,
+      "notes": ""
+    },
+    {
+      "class_id": "phys201",
+      "class_name": "Physics 201",
+      "status": "Pass",
+      "grade": 8.5,
+      "period": "2024-1",
+      "notes": "Excellent lab performance"
+    }
+  ]
+}

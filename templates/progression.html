@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Progression — LilClassSchedulin{% endblock %}
+{% block content %}
+<h1>Progression</h1>
+<div class="card-grid">
+  {% for req in requirements %}
+  <div class="card">
+    <div class="card-title">
+      {{ req.badge.get('name', req.badge_id) }}
+      {% if req.badge.get('achieved') %}
+        <span class="badge badge-achieved">Achieved</span>
+      {% endif %}
+    </div>
+    <p class="muted">{{ req.description }}</p>
+    <div class="prog-bar-wrap mt-1">
+      <div class="prog-bar" style="width: {{ '100%' if req.badge.get('achieved') else '0%' }}"></div>
+    </div>
+  </div>
+  {% else %}
+  <p class="muted">No progression requirements defined.</p>
+  {% endfor %}
+</div>
+{% endblock %}

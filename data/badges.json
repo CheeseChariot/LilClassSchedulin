@@ -1,0 +1,22 @@
+{
+  "badges": [
+    {
+      "id": "first_pass",
+      "name": "First Pass",
+      "description": "Pass your first class",
+      "achieved": false
+    },
+    {
+      "id": "honor_roll",
+      "name": "Honor Roll",
+      "description": "Pass 5 classes with distinction",
+      "achieved": false
+    },
+    {
+      "id": "perfect_semester",
+      "name": "Perfect Semester",
+      "description": "Pass all classes in a single semester without retries",
+      "achieved": false
+    }
+  ]
+}

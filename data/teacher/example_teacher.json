@@ -1,0 +1,22 @@
+{
+  "id": "example_teacher",
+  "name": "Example Teacher",
+  "classes": [
+    {
+      "id": "math101",
+      "name": "Math 101",
+      "schedule": null,
+      "status": null
+    },
+    {
+      "id": "phys201",
+      "name": "Physics 201",
+      "schedule": {
+        "monday": "09:00-11:00",
+        "wednesday": "09:00-11:00",
+        "friday": "10:00-11:00"
+      },
+      "status": "active"
+    }
+  ]
+}
