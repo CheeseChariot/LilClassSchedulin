@@ -1,0 +1,10 @@
+{
+  "id": "sala50",
+  "name": "Sala 50",
+  "location_guide": "Building E, second floor — IT zone, room 50.",
+  "capabilities": "20 workstations, projector, whiteboard, air conditioning, Wi-Fi",
+  "space_sqm": 60,
+  "chairs": 20,
+  "description": "IT Lab 2 classroom.",
+  "zone": "ti2"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "sala43",
+  "name": "Sala 43",
+  "location_guide": "Building E, first floor — IT zone, room 43.",
+  "capabilities": "20 workstations, projector, whiteboard, air conditioning, Wi-Fi",
+  "space_sqm": 60,
+  "chairs": 20,
+  "description": "IT Lab 1 classroom.",
+  "zone": "ti1"
+}

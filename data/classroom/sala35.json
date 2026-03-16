@@ -1,0 +1,10 @@
+{
+  "id": "sala35",
+  "name": "Sala 35",
+  "location_guide": "Building D, first floor — Redes zone, room 35.",
+  "capabilities": "Network equipment, switches, servers, projector, whiteboard, air conditioning, Wi-Fi",
+  "space_sqm": 50,
+  "chairs": 25,
+  "description": "Network classroom.",
+  "zone": "redes"
+}

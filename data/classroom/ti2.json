@@ -1,0 +1,10 @@
+{
+  "id": "ti2",
+  "name": "TI2",
+  "location_guide": "Building E, second floor — IT zone.",
+  "capabilities": "20 workstations per room, projector, whiteboard, air conditioning, Wi-Fi",
+  "space_sqm": 360,
+  "chairs": 120,
+  "description": "IT Lab 2 zone with rooms 50-55 for information technology practical sessions.",
+  "rooms": [50, 51, 52, 53, 54, 55]
+}

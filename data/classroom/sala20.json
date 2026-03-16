@@ -1,0 +1,10 @@
+{
+  "id": "sala20",
+  "name": "Sala 20",
+  "location_guide": "Building C, ground floor — Mantenimiento zone, room 20.",
+  "capabilities": "Tools storage, workbench, air conditioning, Wi-Fi",
+  "space_sqm": 40,
+  "chairs": 15,
+  "description": "Maintenance classroom.",
+  "zone": "mantenimiento"
+}
