@@ -43,6 +43,15 @@ Allowed student statuses:
 - `Fail`
 - `Retry`
 - `Force`
+- `Taken`
+
+Status semantics:
+- `Untaken`: course not chosen or not taken yet
+- `Taken`: course currently being taken
+- `Pass`: course completed successfully
+- `Fail`: course failed and not retaken yet
+- `Retry`: required retake after failing a required course
+- `Force`: course taken early or over a prerequisite
 
 ## Kardex (`data/kardex/<student_id>.json`)
 
@@ -78,6 +87,63 @@ Kardex status is synchronized from student career status.
   "description": "General purpose lecture room"
 }
 ```
+
+## Course Catalog (`data/courses.json`)
+
+```json
+{
+  "program_name": "Ingenieria Civil en Computacion e Informatica",
+  "plan_year": 2020,
+  "source": "General course metadata catalog",
+  "courses": [
+    {
+      "course_id": "matematica_i",
+      "course_name": "Matematica I",
+      "semester": 1,
+      "hp": 174.0,
+      "hnp": 232.0,
+      "ct": 14,
+      "duration": "S"
+    }
+  ]
+}
+```
+
+Course catalog entries use a global semester index (`1..12`).
+Legacy data containing `year` plus local `semester` is normalized into a single semester number on load.
+
+## Semester Schedule (`data/schedules/<semester>.json`)
+
+```json
+{
+  "semester": "2026_1",
+  "default_group": "group_1",
+  "university": "Universidad de Magallanes",
+  "program": "Ingenieria Civil en Computacion e Informatica",
+  "plans": ["informatica", "civil"],
+  "classes": [
+    {
+      "class_id": "ingenieria_software_civ_s9",
+      "class_name": "Ingenieria de Software",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": ["kg"],
+      "status": null,
+      "times": [
+        {
+          "day": "tuesday",
+          "block": "b2",
+          "group": null,
+          "room": "redes",
+          "tipo": null
+        }
+      ]
+    }
+  ]
+}
+```
+
+Schedule normalization preserves optional root metadata (`university`, `program`, `plans`), per-class `plan` and `academic_semester`, and per-slot `room` and `tipo` fields.
 
 ## Badges (`data/badges.json`)
 

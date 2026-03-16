@@ -1,0 +1,241 @@
+{
+    "id":  "emvelasq",
+    "name":  "Emmanunel Velásquez",
+    "career":  [
+                   {
+                       "class_id":  "computacion",
+                       "class_name":  "Computacion",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "comunicacion_efectiva",
+                       "class_name":  "Comunicacion Efectiva",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "deportes_i",
+                       "class_name":  "Deportes I",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "introduccion_a_la_ingenieria",
+                       "class_name":  "Introduccion A La Ingenieria",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "matematica_i",
+                       "class_name":  "Matematica I",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "deportes_ii",
+                       "class_name":  "Deportes II",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "fisica_i",
+                       "class_name":  "Fisica I",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "ingenieria_y_sociedad",
+                       "class_name":  "Ingenieria Y Sociedad",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "matematica_ii",
+                       "class_name":  "Matematica II",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "programacion_de_computadores",
+                       "class_name":  "Programacion De Computadores",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "fisica_ii",
+                       "class_name":  "Fisica II",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "matematica_iii",
+                       "class_name":  "Matematica III",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "programacion_estructurada",
+                       "class_name":  "Programación Estructurada",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "quimica_general",
+                       "class_name":  "Quimica General",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "estadistica",
+                       "class_name":  "Estadistica",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "estructuras_de_datos",
+                       "class_name":  "Estructuras De Datos",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "fisica_iii",
+                       "class_name":  "Fisica III",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "introduccion_a_sistemas_operativos",
+                       "class_name":  "Introduccion A Sistemas Operativos",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "matematicas_iv",
+                       "class_name":  "Matematicas IV",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "calculo_numerico",
+                       "class_name":  "Calculo Numerico",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "estructura_de_computadores",
+                       "class_name":  "Estructura De Computadores",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "ingles_i_tecnico",
+                       "class_name":  "Ingles I (Tecnico)",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "programacion_orientada_a_objeto",
+                       "class_name":  "Programación Orientada A Objeto",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "sistemas_digitales",
+                       "class_name":  "Sistemas Digitales",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "ingles_ii",
+                       "class_name":  "Ingles II",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "interfaz_de_usuario",
+                       "class_name":  "Interfaz De Usuario",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "matematicas_para_la_ciencia_de_la_computacion",
+                       "class_name":  "Matemáticas Para La Ciencia De La Computación",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "taller_de_integracion",
+                       "class_name":  "Taller De Integración",
+                       "status":  "Fail"
+                   },
+                   {
+                       "class_id":  "taller_de_mantenimiento",
+                       "class_name":  "Taller De Mantenimiento",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "diseno_de_algoritmos",
+                       "class_name":  "Diseño De Algoritmos",
+                       "status":  "Retry"
+                   },
+                   {
+                       "class_id":  "economia_y_administracion_de_empresas",
+                       "class_name":  "Economia Y Administracion De Empresas",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "formacion_de_emprendedores",
+                       "class_name":  "Formacion De Emprendedores",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "gestion_de_sistemas_contables",
+                       "class_name":  "Gestión De Sistemas Contables",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "ingles_iii",
+                       "class_name":  "Ingles III",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "redes_de_computadores_i",
+                       "class_name":  "Redes De Computadores I",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "sistemas_operativos",
+                       "class_name":  "Sistemas Operativos",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "bases_de_datos",
+                       "class_name":  "Bases De Datos",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "comportamiento_organizacional_y_liderazgo",
+                       "class_name":  "Comportamiento Organizacional Y Liderazgo",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "ingles_iv_conversacional",
+                       "class_name":  "Ingles IV (Conversacional)",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "investigacion_operativa",
+                       "class_name":  "Investigacion Operativa",
+                       "status":  "Untaken"
+                   },
+                   {
+                       "class_id":  "redes_de_computadores_ii",
+                       "class_name":  "Redes De Computadores II",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "sistemas_de_informacion_i",
+                       "class_name":  "Sistemas De Información I",
+                       "status":  "Pass"
+                   },
+                   {
+                       "class_id":  "ingenieria_de_software",
+                       "class_name":  "Ingenieria De Software",
+                       "status":  "Taken"
+                   },
+                   {
+                       "class_id":  "ingenieria_economica",
+                       "class_name":  "Ingenieria Economica",
+                       "status":  "Taken"
+                   },
+                   {
+                       "class_id":  "sistemas_de_informacion_ii",
+                       "class_name":  "Sistemas De Información II",
+                       "status":  "Taken"
+                   },
+                   {
+                       "class_id":  "taller_de_bases_de_datos",
+                       "class_name":  "Taller De Bases De Datos",
+                       "status":  "Taken"
+                   },
+                   {
+                       "class_id":  "taller_de_sistemas_computacionales",
+                       "class_name":  "Taller De Sistemas Computacionales",
+                       "status":  "Taken"
+                   }
+               ]
+}

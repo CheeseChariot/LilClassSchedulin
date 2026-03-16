@@ -7,6 +7,8 @@ It tracks:
 - teachers and classes
 - students and class status progression
 - kardex details per class (grade, period, notes)
+- program course catalog metadata
+- semester schedule datasets
 - classrooms and basic capabilities
 - badges and progression requirements
 
@@ -27,6 +29,8 @@ There is no database server. Data is loaded and saved directly from files.
 - `data/student/`: student profiles
 - `data/kardex/`: kardex by student id
 - `data/classroom/`: classroom profiles
+- `data/courses.json`: program course catalog
+- `data/schedules/`: semester schedule files
 - `data/badges.json`: badges list
 - `data/progression.json`: progression requirements
 

@@ -13,15 +13,15 @@ CLASSROOM_DIR = os.path.join(DATA_DIR, "classroom")
 BADGES_FILE = os.path.join(DATA_DIR, "badges.json")
 PROGRESSION_FILE = os.path.join(DATA_DIR, "progression.json")
 COURSES_FILE = os.path.join(DATA_DIR, "courses.json")
-SCHEDBLOCKS_FILE = os.path.join(DATA_DIR, "schedblocks.json")
+SCHEDBLOCKS_FILE = os.path.join(DATA_DIR, "scheblocks.json")
 SCHEDULES_DIR = os.path.join(DATA_DIR, "schedules")
 
-CLASS_STATUSES = ["Untaken", "Pass", "Fail", "Retry", "Force"]
-CURRENT_SCHEDULE_SEMESTER = "2025_1"
+CLASS_STATUSES = ["Untaken", "Pass", "Fail", "Retry", "Force", "Taken"]
+CURRENT_SCHEDULE_SEMESTER = "2026_1"
 DEFAULT_SCHEDULE_GROUP = "group_1"
 WEEK_DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-# Source of truth for schedule blocks is data/schedblocks.json.
+# Source of truth for schedule blocks is data/scheblocks.json.
 
 
 def _default_badges_data() -> dict:
@@ -87,6 +87,9 @@ def _default_semester_schedule(semester: str) -> dict:
     return {
         "semester": semester,
         "default_group": DEFAULT_SCHEDULE_GROUP,
+        "university": None,
+        "program": None,
+        "plans": [],
         "classes": [],
     }
 
@@ -265,12 +268,16 @@ def _normalize_courses(data) -> dict:
         if duration not in {"S", "A", "CV", "EE"}:
             duration = "S"
 
+        legacy_year = _parse_optional_int(course.get("year"))
+        semester = _parse_optional_int(course.get("semester"))
+        if legacy_year is not None and semester is not None:
+            semester = ((legacy_year - 1) * 2) + semester
+
         courses.append(
             {
                 "course_id": course_id,
                 "course_name": course_name or course_id,
-                "year": _parse_optional_int(course.get("year")),
-                "semester": _parse_optional_int(course.get("semester")),
+                "semester": semester,
                 "hp": _parse_optional_float(course.get("hp")),
                 "hnp": _parse_optional_float(course.get("hnp")),
                 "ct": _parse_optional_int(course.get("ct")),
@@ -280,7 +287,6 @@ def _normalize_courses(data) -> dict:
 
     courses.sort(
         key=lambda c: (
-            c.get("year") if c.get("year") is not None else 999,
             c.get("semester") if c.get("semester") is not None else 99,
             c.get("course_name", "").lower(),
         )
@@ -338,6 +344,20 @@ def _normalize_semester_schedule(data, semester: str) -> dict:
     if not default_group:
         default_group = DEFAULT_SCHEDULE_GROUP
 
+    university = _coerce_text(data.get("university")) or None
+    program = _coerce_text(data.get("program")) or None
+    raw_plans = data.get("plans")
+    if not isinstance(raw_plans, list):
+        raw_plans = []
+    plans = []
+    seen_plans = set()
+    for plan_ref in raw_plans:
+        plan_id = _safe_filename(_coerce_text(plan_ref))
+        if not plan_id or plan_id in seen_plans:
+            continue
+        seen_plans.add(plan_id)
+        plans.append(plan_id)
+
     raw_classes = data.get("classes")
     if not isinstance(raw_classes, list):
         raw_classes = []
@@ -350,6 +370,8 @@ def _normalize_semester_schedule(data, semester: str) -> dict:
 
         class_name = _coerce_text(schedule_class.get("class_name") or schedule_class.get("name"))
         class_id = _safe_filename(_coerce_text(schedule_class.get("class_id") or schedule_class.get("id")) or class_name)
+        plan = _safe_filename(_coerce_text(schedule_class.get("plan"))) or None
+        academic_semester = _parse_optional_int(schedule_class.get("academic_semester"))
         if not class_id or class_id in seen_class_ids:
             continue
         seen_class_ids.add(class_id)
@@ -380,36 +402,54 @@ def _normalize_semester_schedule(data, semester: str) -> dict:
             day = _coerce_text(slot.get("day")).lower()
             if day not in WEEK_DAYS:
                 continue
-            group = _safe_filename(_coerce_text(slot.get("group"), default_group)) or default_group
+            raw_group = slot.get("group") if "group" in slot else default_group
+            group = _safe_filename(_coerce_text(raw_group)) or None
             block = _coerce_text(slot.get("block"), "custom") or "custom"
             normalized_slot = {
                 "day": day,
                 "block": block,
                 "group": group,
             }
+            room = _safe_filename(_coerce_text(slot.get("room"))) or None
+            tipo = _coerce_text(slot.get("tipo")) or None
             time_value = _coerce_text(slot.get("time"))
             time_raw = _coerce_text(slot.get("time_raw"))
             if time_value:
                 normalized_slot["time"] = time_value
             elif time_raw:
                 normalized_slot["time_raw"] = time_raw
+            if "room" in slot or room is not None:
+                normalized_slot["room"] = room
+            if "tipo" in slot or tipo is not None:
+                normalized_slot["tipo"] = tipo
             times.append(normalized_slot)
 
         classes.append(
             {
                 "class_id": class_id,
                 "class_name": class_name or class_id,
+                "plan": plan,
+                "academic_semester": academic_semester,
                 "teacher_ids": teacher_ids,
                 "status": _coerce_text(schedule_class.get("status"), "") or None,
                 "times": times,
             }
         )
 
-    classes.sort(key=lambda c: c.get("class_name", "").lower())
+    classes.sort(
+        key=lambda c: (
+            c.get("plan") or "zzz",
+            c.get("academic_semester") if c.get("academic_semester") is not None else 999,
+            c.get("class_name", "").lower(),
+        )
+    )
 
     return {
         "semester": _coerce_text(data.get("semester"), sem_id) or sem_id,
         "default_group": default_group,
+        "university": university,
+        "program": program,
+        "plans": plans,
         "classes": classes,
     }
 
@@ -427,6 +467,8 @@ def _ensure_schedule_class(schedule_data: dict, class_id: str, class_name: str):
         schedule_class = {
             "class_id": class_id,
             "class_name": class_name or class_id,
+            "plan": None,
+            "academic_semester": None,
             "teacher_ids": [],
             "status": None,
             "times": [],
@@ -511,7 +553,7 @@ def _normalizer_for_directory(directory: str):
 
 def _load_json(path):
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8-sig") as f:
             return json.load(f)
     except FileNotFoundError:
         return {}
@@ -977,12 +1019,12 @@ def courses_catalog():
     catalog = _normalize_courses(_load_json(COURSES_FILE))
 
     groups = []
-    current_key = None
+    current_semester = None
     for course in catalog.get("courses", []):
-        key = (course.get("year"), course.get("semester"))
-        if key != current_key:
-            groups.append({"year": key[0], "semester": key[1], "courses": []})
-            current_key = key
+        semester = course.get("semester")
+        if semester != current_semester:
+            groups.append({"semester": semester, "courses": []})
+            current_semester = semester
         groups[-1]["courses"].append(course)
 
     return render_template("courses.html", catalog=catalog, groups=groups)

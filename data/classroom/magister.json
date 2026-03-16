@@ -1,0 +1,7 @@
+{
+  "id": "magister",
+  "name": "Sala Magíster",
+  "location_guide": "Building E",
+  "capabilities": "Projector, whiteboard, air conditioning, Wi-Fi",
+  "description": "Postgraduate seminar room"
+}

@@ -38,6 +38,12 @@ Returns all classroom profiles.
 
 Response: `200 OK`
 
+## `GET /api/courses`
+
+Returns the normalized course catalog.
+
+Response: `200 OK`
+
 ## `GET /api/badges`
 
 Returns badges JSON.

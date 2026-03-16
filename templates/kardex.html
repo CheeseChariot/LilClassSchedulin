@@ -10,6 +10,7 @@
 {% set failed   = kardex.entries | selectattr('status', 'eq', 'Fail')    | list %}
 {% set retry    = kardex.entries | selectattr('status', 'eq', 'Retry')   | list %}
 {% set forced   = kardex.entries | selectattr('status', 'eq', 'Force')   | list %}
+{% set taken    = kardex.entries | selectattr('status', 'eq', 'Taken')   | list %}
 {% set untaken  = kardex.entries | selectattr('status', 'eq', 'Untaken') | list %}
 
 <div class="stat-grid" style="margin-bottom:1.5rem">
@@ -31,7 +32,11 @@
   </div>
   <div class="stat-card">
     <div class="number" style="color:var(--info)">{{ forced | length }}</div>
-    <div class="label">Forced</div>
+    <div class="label">Force</div>
+  </div>
+  <div class="stat-card">
+    <div class="number" style="color:#7dd3fc">{{ taken | length }}</div>
+    <div class="label">Taken</div>
   </div>
   <div class="stat-card">
     <div class="number" style="color:var(--text-muted)">{{ untaken | length }}</div>

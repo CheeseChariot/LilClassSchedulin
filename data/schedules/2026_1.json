@@ -1,0 +1,775 @@
+{
+  "semester": "2026_1",
+  "university": "Universidad de Magallanes",
+  "program": "Ingeniería Civil en Computación e Informática",
+  "plans": ["informatica", "civil"],
+  "classes": [
+    {
+      "class_id": "fisica_inf_s1",
+      "class_name": "Física",
+      "plan": "informatica",
+      "academic_semester": 1,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": "G1",   "room": null, "tipo": "Práctica" },
+        { "day": "monday",    "block": "b2", "group": "G1",   "room": null, "tipo": "Práctica" },
+        { "day": "tuesday",   "block": "b1", "group": null,   "room": null, "tipo": "Teoría"   },
+        { "day": "tuesday",   "block": "b2", "group": null,   "room": null, "tipo": "Teoría"   },
+        { "day": "wednesday", "block": "b1", "group": null,   "room": null, "tipo": "Teoría"   },
+        { "day": "wednesday", "block": "b2", "group": null,   "room": null, "tipo": "Teoría"   },
+        { "day": "thursday",  "block": "b1", "group": null,   "room": null, "tipo": "Teoría"   },
+        { "day": "thursday",  "block": "b2", "group": null,   "room": null, "tipo": "Teoría"   }
+      ]
+    },
+    {
+      "class_id": "quimica_inf_s1",
+      "class_name": "Química",
+      "plan": "informatica",
+      "academic_semester": 1,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday",   "block": "b3", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "wednesday", "block": "b3", "group": null, "room": null, "tipo": "Teoría" }
+      ]
+    },
+    {
+      "class_id": "matematica_general_inf_s2",
+      "class_name": "Matemática General",
+      "plan": "informatica",
+      "academic_semester": 2,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",   "block": "b1", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "monday",   "block": "b3", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "tuesday",  "block": "b5", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "tuesday",  "block": "b6", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "thursday", "block": "b5", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "thursday", "block": "b6", "group": null, "room": null, "tipo": "Teoría" }
+      ]
+    },
+    {
+      "class_id": "computacion_basica_inf_s2",
+      "class_name": "Computación Básica",
+      "plan": "informatica",
+      "academic_semester": 2,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": "G1", "room": null, "tipo": "Teoría"   },
+        { "day": "tuesday",   "block": "b2", "group": "G2", "room": null, "tipo": "Teoría"   },
+        { "day": "wednesday", "block": "b2", "group": "G1", "room": null, "tipo": "Práctica" },
+        { "day": "wednesday", "block": "b3", "group": "G1", "room": null, "tipo": "Práctica" },
+        { "day": "friday",    "block": "b2", "group": "G1", "room": null, "tipo": "Práctica" },
+        { "day": "friday",    "block": "b5", "group": "G2", "room": null, "tipo": "Práctica" },
+        { "day": "friday",    "block": "b6", "group": "G2", "room": null, "tipo": "Práctica" }
+      ]
+    },
+    {
+      "class_id": "orientacion_profesional_inf_s2",
+      "class_name": "Orientación Profesional",
+      "plan": "informatica",
+      "academic_semester": 2,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday", "block": "b5", "group": "G1", "room": null, "tipo": "Teoría" },
+        { "day": "tuesday", "block": "b6", "group": "G2", "room": null, "tipo": "Teoría" }
+      ]
+    },
+    {
+      "class_id": "matematica_aplicada_i_inf_s2",
+      "class_name": "Matemática Aplicada I",
+      "plan": "informatica",
+      "academic_semester": 2,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b3", "group": null, "room": null, "tipo": null },
+        { "day": "wednesday", "block": "b4", "group": null, "room": null, "tipo": null },
+        { "day": "wednesday", "block": "b5", "group": null, "room": null, "tipo": null },
+        { "day": "thursday",  "block": "b2", "group": null, "room": null, "tipo": null },
+        { "day": "friday",    "block": "b3", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "taller_comunicaciones_inf_s2",
+      "class_name": "Taller de Comunicaciones",
+      "plan": "informatica",
+      "academic_semester": 2,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "friday", "block": "b7", "group": null, "room": null, "tipo": "Práctica" }
+      ]
+    },
+    {
+      "class_id": "bases_datos_i_inf_s3",
+      "class_name": "Bases de Datos I",
+      "plan": "informatica",
+      "academic_semester": 3,
+      "teacher_ids": ["JA"],
+      "status": null,
+      "times": [
+        { "day": "monday",   "block": "b1", "group": null, "room": "ti1", "tipo": null },
+        { "day": "monday",   "block": "b2", "group": null, "room": "ti1", "tipo": null },
+        { "day": "monday",   "block": "b3", "group": null, "room": "ti1", "tipo": null },
+        { "day": "tuesday",  "block": "b2", "group": null, "room": "ti1", "tipo": null },
+        { "day": "thursday", "block": "b3", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "sistemas_operativos_inf_s3",
+      "class_name": "Sistemas Operativos",
+      "plan": "informatica",
+      "academic_semester": 3,
+      "teacher_ids": ["EP"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b5", "group": null, "room": "ti1", "tipo": null },
+        { "day": "monday",    "block": "b6", "group": null, "room": "ti1", "tipo": null },
+        { "day": "wednesday", "block": "b5", "group": null, "room": "ti1", "tipo": null },
+        { "day": "friday",    "block": "b5", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "matematica_aplicada_ii_inf_s3",
+      "class_name": "Matemática Aplicada II",
+      "plan": "informatica",
+      "academic_semester": 3,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday", "block": "b3", "group": null, "room": null, "tipo": null },
+        { "day": "thursday", "block": "b3", "group": null, "room": null, "tipo": null },
+        { "day": "friday",   "block": "b6", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "programacion_ii_inf_s3",
+      "class_name": "Programación II",
+      "plan": "informatica",
+      "academic_semester": 3,
+      "teacher_ids": ["RU"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",  "block": "b6", "group": null, "room": null, "tipo": null },
+        { "day": "friday",   "block": "b7", "group": null, "room": null, "tipo": null },
+        { "day": "saturday", "block": "b6", "group": null, "room": null, "tipo": null },
+        { "day": "saturday", "block": "b7", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingles_tecnico_inf_s3",
+      "class_name": "Inglés Técnico",
+      "plan": "informatica",
+      "academic_semester": 3,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b6", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "diseno_algoritmos_inf_s5",
+      "class_name": "Diseño de Algoritmos",
+      "plan": "informatica",
+      "academic_semester": 5,
+      "teacher_ids": ["JacA"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": "ti1", "tipo": "Teoría"   },
+        { "day": "tuesday",   "block": "b2", "group": null, "room": "ti1", "tipo": "Práctica" },
+        { "day": "wednesday", "block": "b1", "group": null, "room": "ti1", "tipo": "Práctica" },
+        { "day": "thursday",  "block": "b2", "group": null, "room": "ti1", "tipo": "Teoría"   }
+      ]
+    },
+    {
+      "class_id": "topicos_i_inf_s5",
+      "class_name": "Tópicos I",
+      "plan": "informatica",
+      "academic_semester": 5,
+      "teacher_ids": ["PM"],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b2", "group": null, "room": "ti2", "tipo": null },
+        { "day": "thursday",  "block": "b1", "group": null, "room": "ti2", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "topicos_ii_inf_s5",
+      "class_name": "Tópicos II",
+      "plan": "informatica",
+      "academic_semester": 5,
+      "teacher_ids": ["CA"],
+      "status": null,
+      "times": [
+        { "day": "thursday", "block": "b3", "group": null, "room": "ti2", "tipo": null },
+        { "day": "friday",   "block": "b3", "group": null, "room": "ti2", "tipo": null },
+        { "day": "friday",   "block": "b6", "group": null, "room": "ti2", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "topicos_iii_inf_s5",
+      "class_name": "Tópicos III",
+      "plan": "informatica",
+      "academic_semester": 5,
+      "teacher_ids": ["PA"],
+      "status": null,
+      "times": [
+        { "day": "tuesday", "block": "b2", "group": null, "room": "redes", "tipo": null },
+        { "day": "friday",  "block": "b2", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "programacion_avanzada_inf_s5",
+      "class_name": "Programación Avanzada",
+      "plan": "informatica",
+      "academic_semester": 5,
+      "teacher_ids": ["CA"],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b3", "group": null, "room": "ti1", "tipo": null },
+        { "day": "friday",    "block": "b5", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "economia_administracion_inf_s5",
+      "class_name": "Economía y Administración de Empresas",
+      "plan": "informatica",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "thursday", "block": "b5", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "topicos_i_inf_s6",
+      "class_name": "Tópicos I",
+      "plan": "informatica",
+      "academic_semester": 6,
+      "teacher_ids": ["PM"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": "ti2", "tipo": null },
+        { "day": "wednesday", "block": "b2", "group": null, "room": "ti2", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "economia_administracion_inf_s6",
+      "class_name": "Economía y Administración de Empresas",
+      "plan": "informatica",
+      "academic_semester": 6,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday", "block": "b5", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "programacion_avanzada_inf_s6",
+      "class_name": "Programación Avanzada",
+      "plan": "informatica",
+      "academic_semester": 6,
+      "teacher_ids": ["CA"],
+      "status": null,
+      "times": [
+        { "day": "tuesday", "block": "b6", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "topicos_a_inf_s7",
+      "class_name": "Tópicos A",
+      "plan": "informatica",
+      "academic_semester": 7,
+      "teacher_ids": ["JA"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": "magister", "tipo": null },
+        { "day": "tuesday",   "block": "b1", "group": null, "room": "magister", "tipo": null },
+        { "day": "wednesday", "block": "b1", "group": null, "room": "magister", "tipo": null },
+        { "day": "friday",    "block": "b1", "group": null, "room": "magister", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "topicos_b_inf_s7",
+      "class_name": "Tópicos B",
+      "plan": "informatica",
+      "academic_semester": 7,
+      "teacher_ids": ["AB"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",  "block": "b4", "group": null, "room": "ti1", "tipo": null },
+        { "day": "thursday", "block": "b4", "group": null, "room": "ti1", "tipo": null },
+        { "day": "friday",   "block": "b4", "group": null, "room": "ti1", "tipo": null },
+        { "day": "saturday", "block": "b4", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "topicos_d_inf_s7",
+      "class_name": "Tópicos D",
+      "plan": "informatica",
+      "academic_semester": 7,
+      "teacher_ids": ["CA"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",   "block": "b2", "group": null, "room": "ti2",   "tipo": null },
+        { "day": "wednesday", "block": "b3", "group": null, "room": "ti2",   "tipo": null },
+        { "day": "friday",    "block": "b2", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingenieria_software_inf_s7",
+      "class_name": "Ingeniería de Software",
+      "plan": "informatica",
+      "academic_semester": 7,
+      "teacher_ids": ["KG"],
+      "status": null,
+      "times": [
+        { "day": "monday",  "block": "b1", "group": null, "room": "redes", "tipo": null },
+        { "day": "tuesday", "block": "b2", "group": null, "room": "redes", "tipo": null },
+        { "day": "friday",  "block": "b7", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "seminario_profesional_inf_s7",
+      "class_name": "Seminario Profesional",
+      "plan": "informatica",
+      "academic_semester": 7,
+      "teacher_ids": ["JV"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",   "block": "b2", "group": null, "room": "ti2", "tipo": null },
+        { "day": "wednesday", "block": "b3", "group": null, "room": "ti2", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingles_conversacional_inf_s7",
+      "class_name": "Inglés Conversacional",
+      "plan": "informatica",
+      "academic_semester": 7,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday",   "block": "b2", "group": null, "room": null, "tipo": null },
+        { "day": "wednesday", "block": "b3", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "proyecto_especialidad_inf_s8",
+      "class_name": "Proyecto de Especialidad",
+      "plan": "informatica",
+      "academic_semester": 8,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday", "block": "b1", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "computacion_civ_s1",
+      "class_name": "Computación",
+      "plan": "civil",
+      "academic_semester": 1,
+      "teacher_ids": [],
+      "status": null,
+      "times": []
+    },
+    {
+      "class_id": "matematica_i_civ_s1",
+      "class_name": "Matemática I",
+      "plan": "civil",
+      "academic_semester": 1,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "monday",    "block": "b2", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "wednesday", "block": "b1", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "wednesday", "block": "b2", "group": null, "room": null, "tipo": "Teoría" }
+      ]
+    },
+    {
+      "class_id": "matematica_ii_civ_s1",
+      "class_name": "Matemática II",
+      "plan": "civil",
+      "academic_semester": 1,
+      "teacher_ids": [],
+      "status": null,
+      "times": []
+    },
+    {
+      "class_id": "fisica_i_civ_s1",
+      "class_name": "Física I",
+      "plan": "civil",
+      "academic_semester": 1,
+      "teacher_ids": [],
+      "status": null,
+      "times": []
+    },
+    {
+      "class_id": "fisica_ii_civ_s3",
+      "class_name": "Física II",
+      "plan": "civil",
+      "academic_semester": 3,
+      "teacher_ids": [],
+      "status": null,
+      "times": []
+    },
+    {
+      "class_id": "matematica_iii_civ_s3",
+      "class_name": "Matemática III",
+      "plan": "civil",
+      "academic_semester": 3,
+      "teacher_ids": [],
+      "status": null,
+      "times": []
+    },
+    {
+      "class_id": "fisica_iii_civ_s3",
+      "class_name": "Física III",
+      "plan": "civil",
+      "academic_semester": 3,
+      "teacher_ids": [],
+      "status": null,
+      "times": []
+    },
+    {
+      "class_id": "matematica_i_civ_s5",
+      "class_name": "Matemática I",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "monday",    "block": "b2", "group": null, "room": null, "tipo": null     },
+        { "day": "wednesday", "block": "b1", "group": null, "room": null, "tipo": "Teoría" },
+        { "day": "thursday",  "block": "b1", "group": null, "room": null, "tipo": "Teoría" }
+      ]
+    },
+    {
+      "class_id": "calculo_numerico_civ_s5",
+      "class_name": "Cálculo Numérico",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": null, "tipo": null },
+        { "day": "wednesday", "block": "b1", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "estructura_computadores_civ_s5",
+      "class_name": "Estructura de Computadores",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": ["PA"],
+      "status": null,
+      "times": [
+        { "day": "monday",   "block": "b1", "group": null, "room": "redes", "tipo": null },
+        { "day": "tuesday",  "block": "b1", "group": null, "room": "redes", "tipo": null },
+        { "day": "thursday", "block": "b1", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "sistemas_digitales_civ_s5",
+      "class_name": "Sistemas Digitales",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": ["EP"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b2", "group": null, "room": "ti1", "tipo": null },
+        { "day": "tuesday",   "block": "b2", "group": null, "room": "ti1", "tipo": null },
+        { "day": "wednesday", "block": "b3", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "quimica_general_civ_s5",
+      "class_name": "Química General",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "monday",   "block": "b2", "group": null, "room": null, "tipo": null       },
+        { "day": "tuesday",  "block": "b3", "group": null, "room": null, "tipo": "Teoría"   },
+        { "day": "thursday", "block": "b5", "group": "G1", "room": null, "tipo": "Práctica" },
+        { "day": "friday",   "block": "b5", "group": "G2", "room": null, "tipo": "Práctica" }
+      ]
+    },
+    {
+      "class_id": "comunicacion_efectiva_civ_s5",
+      "class_name": "Comunicación Efectiva",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday", "block": "b3", "group": "G1/G2", "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "matematica_iii_civ_s5",
+      "class_name": "Matemática III",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b2", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "poo_civ_s5",
+      "class_name": "P.O.O.",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": ["CA"],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b3", "group": null, "room": "ti1", "tipo": null },
+        { "day": "friday",    "block": "b5", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingles_i_civ_s5",
+      "class_name": "Inglés I",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b5", "group": null, "room": null, "tipo": null },
+        { "day": "friday",    "block": "b5", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingles_ii_conversacional_civ_s5",
+      "class_name": "Inglés II Conversacional",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "thursday", "block": "b3", "group": null, "room": null, "tipo": null },
+        { "day": "friday",   "block": "b3", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "matematica_iv_civ_s5",
+      "class_name": "Matemática IV",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "thursday", "block": "b3", "group": null, "room": null, "tipo": null },
+        { "day": "friday",   "block": "b3", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "introduccion_ingenieria_civ_s5",
+      "class_name": "Introducción a la Ingeniería",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "thursday", "block": "b5", "group": "G1", "room": null, "tipo": null },
+        { "day": "friday",   "block": "b5", "group": "G2", "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "computacion_civ_s5",
+      "class_name": "Computación",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "thursday", "block": "b5", "group": "G1", "room": null, "tipo": "Práctica" },
+        { "day": "friday",   "block": "b5", "group": "G1", "room": null, "tipo": "Práctica" },
+        { "day": "friday",   "block": "b6", "group": "G2", "room": null, "tipo": "Teoría"   },
+        { "day": "friday",   "block": "b7", "group": "G2", "room": null, "tipo": "Práctica" }
+      ]
+    },
+    {
+      "class_id": "programacion_estructurada_civ_s5",
+      "class_name": "Programación Estructurada",
+      "plan": "civil",
+      "academic_semester": 5,
+      "teacher_ids": ["RU"],
+      "status": null,
+      "times": [
+        { "day": "friday", "block": "b6", "group": null, "room": "ti1", "tipo": null },
+        { "day": "friday", "block": "b7", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "diseno_algoritmos_civ_s7",
+      "class_name": "Diseño de Algoritmos",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": ["JacA"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": "ti1", "tipo": "Teoría"   },
+        { "day": "tuesday",   "block": "b2", "group": null, "room": "ti1", "tipo": "Práctica" },
+        { "day": "wednesday", "block": "b1", "group": null, "room": "ti1", "tipo": "Práctica" },
+        { "day": "wednesday", "block": "b2", "group": null, "room": "ti1", "tipo": "Teoría"   }
+      ]
+    },
+    {
+      "class_id": "sistemas_operativos_civil_civ_s7",
+      "class_name": "Sistemas Operativos Civil",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": ["MS"],
+      "status": null,
+      "times": [
+        { "day": "monday",  "block": "b2", "group": null, "room": "ti1", "tipo": null },
+        { "day": "tuesday", "block": "b3", "group": null, "room": "ti1", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "gestion_sistemas_contables_civ_s7",
+      "class_name": "Gestión de Sistemas Contables",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": ["MS"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",  "block": "b3", "group": null, "room": "ti2", "tipo": null },
+        { "day": "thursday", "block": "b5", "group": null, "room": "ti2", "tipo": null },
+        { "day": "friday",   "block": "b6", "group": null, "room": "ti2", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "economia_administracion_civ_s7",
+      "class_name": "Economía y Administración de Empresas",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday",  "block": "b5", "group": null, "room": null, "tipo": null },
+        { "day": "thursday", "block": "b5", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingles_iii_civ_s7",
+      "class_name": "Inglés III",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b3", "group": null, "room": null, "tipo": null },
+        { "day": "thursday",  "block": "b4", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "redes_computadores_i_civ_s7",
+      "class_name": "Redes de Computadores I",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": ["JC"],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b5", "group": null, "room": "redes", "tipo": null },
+        { "day": "friday",    "block": "b5", "group": null, "room": "redes", "tipo": null },
+        { "day": "friday",    "block": "b6", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "formacion_emprendedores_civ_s7",
+      "class_name": "Formación de Emprendedores",
+      "plan": "civil",
+      "academic_semester": 7,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "friday", "block": "b7", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "sistemas_informacion_ii_civ_s9",
+      "class_name": "Sistemas de Información II",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": ["PM"],
+      "status": null,
+      "times": [
+        { "day": "monday",    "block": "b1", "group": null, "room": "mantenimiento", "tipo": null },
+        { "day": "wednesday", "block": "b2", "group": null, "room": "mantenimiento", "tipo": null },
+        { "day": "friday",    "block": "b3", "group": null, "room": "mantenimiento", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingenieria_software_civ_s9",
+      "class_name": "Ingeniería de Software",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": ["KG"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",   "block": "b2", "group": null, "room": "redes", "tipo": null },
+        { "day": "wednesday", "block": "b1", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "taller_bases_datos_civ_s9",
+      "class_name": "Taller de Bases de Datos",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": ["JaA"],
+      "status": null,
+      "times": [
+        { "day": "tuesday",  "block": "b6", "group": null, "room": "mantenimiento", "tipo": null },
+        { "day": "thursday", "block": "b5", "group": null, "room": "mantenimiento", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "taller_sistemas_computacionales_civ_s9",
+      "class_name": "Taller de Sistemas Computacionales",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": ["JC"],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b5", "group": null, "room": "redes", "tipo": null },
+        { "day": "thursday",  "block": "b5", "group": null, "room": "redes", "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingles_conversacional_civ_s9",
+      "class_name": "Inglés Conversacional",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "tuesday",  "block": "b2", "group": null, "room": null, "tipo": null },
+        { "day": "thursday", "block": "b3", "group": null, "room": null, "tipo": null }
+      ]
+    },
+    {
+      "class_id": "ingenieria_economica_civ_s9",
+      "class_name": "Ingeniería Económica",
+      "plan": "civil",
+      "academic_semester": 9,
+      "teacher_ids": [],
+      "status": null,
+      "times": [
+        { "day": "wednesday", "block": "b6", "group": null, "room": null, "tipo": null },
+        { "day": "thursday",  "block": "b6", "group": null, "room": null, "tipo": null }
+      ]
+    }
+  ]
+}

@@ -20,7 +20,7 @@
 {% if groups %}
   {% for group in groups %}
   <div class="section-header mt-2">
-    <h2>Year {{ group.year }} · Semester {{ group.semester }}</h2>
+    <h2>Semester {{ group.semester if group.semester is not none else 'Unspecified' }}</h2>
     <span class="muted">{{ group.courses | length }} course(s)</span>
   </div>
   <div class="card">

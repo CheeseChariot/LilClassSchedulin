@@ -4,6 +4,8 @@ LilClassSchedulin is a local Flask web app for tracking:
 - teachers and their classes
 - students and career status by class
 - kardex records (grade, period, notes)
+- program course catalog metadata
+- semester schedule datasets
 - classrooms, badges, and progression requirements
 
 This project stores data as JSON files in `data/`, so it can run without a database server.
@@ -96,6 +98,7 @@ This makes first run and old data files more resilient.
 - `/students`, `/student/<student_id>`
 - `/student/<student_id>/kardex`
 - `/classrooms`, `/classroom/<classroom_id>`
+- `/courses`
 - `/badges`, `/progression`
 
 JSON API routes:
@@ -103,6 +106,7 @@ JSON API routes:
 - `/api/students`
 - `/api/student/<student_id>/kardex`
 - `/api/classrooms`
+- `/api/courses`
 - `/api/badges`
 - `/api/progression`
 
@@ -121,3 +125,4 @@ Detailed docs are in `doc/`:
 - Data is file-based JSON (no SQL migrations needed).
 - IDs are slug-like and derived from names for routing/file names.
 - Student career status is treated as source of truth and synced into kardex status.
+- Course catalog entries use a single global `semester` number (1..12); legacy `year` + `semester` files are normalized on load.

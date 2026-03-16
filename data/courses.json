@@ -1,617 +1,556 @@
 {
-  "program_name": "Ingenieria Civil en Computacion e Informatica",
-  "plan_year": 2020,
-  "source": "Extracted from user-provided kardex images/PDF; contains only general course metadata.",
-  "courses": [
-    {
-      "course_id": "matematica_i",
-      "course_name": "Matematica I",
-      "year": 1,
-      "semester": 1,
-      "hp": 174.0,
-      "hnp": 232.0,
-      "ct": 14,
-      "duration": "S"
-    },
-    {
-      "course_id": "deportes_i",
-      "course_name": "Deportes I",
-      "year": 1,
-      "semester": 1,
-      "hp": 26.25,
-      "hnp": 26.25,
-      "ct": 2,
-      "duration": "S"
-    },
-    {
-      "course_id": "computacion",
-      "course_name": "Computacion",
-      "year": 1,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 29.0,
-      "ct": 3,
-      "duration": "S"
-    },
-    {
-      "course_id": "introduccion_a_la_ingenieria",
-      "course_name": "Introduccion A La Ingenieria",
-      "year": 1,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "comunicacion_efectiva",
-      "course_name": "Comunicacion Efectiva",
-      "year": 1,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "matematica_ii",
-      "course_name": "Matematica II",
-      "year": 1,
-      "semester": 2,
-      "hp": 145.0,
-      "hnp": 203.0,
-      "ct": 12,
-      "duration": "S"
-    },
-    {
-      "course_id": "fisica_i",
-      "course_name": "Fisica I",
-      "year": 1,
-      "semester": 2,
-      "hp": 116.0,
-      "hnp": 145.0,
-      "ct": 9,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingenieria_y_sociedad",
-      "course_name": "Ingenieria Y Sociedad",
-      "year": 1,
-      "semester": 2,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "deportes_ii",
-      "course_name": "Deportes II",
-      "year": 1,
-      "semester": 2,
-      "hp": 26.25,
-      "hnp": 26.25,
-      "ct": 2,
-      "duration": "S"
-    },
-    {
-      "course_id": "programacion_de_computadores",
-      "course_name": "Programacion De Computadores",
-      "year": 1,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "matematica_iii",
-      "course_name": "Matematica III",
-      "year": 2,
-      "semester": 1,
-      "hp": 105.0,
-      "hnp": 105.0,
-      "ct": 9,
-      "duration": "S"
-    },
-    {
-      "course_id": "fisica_ii",
-      "course_name": "Fisica II",
-      "year": 2,
-      "semester": 1,
-      "hp": 105.0,
-      "hnp": 105.0,
-      "ct": 9,
-      "duration": "S"
-    },
-    {
-      "course_id": "quimica_general",
-      "course_name": "Quimica General",
-      "year": 2,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "programacion_estructurada",
-      "course_name": "Programaci\u00f3n Estructurada",
-      "year": 2,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "matematicas_iv",
-      "course_name": "Matematicas IV",
-      "year": 2,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "fisica_iii",
-      "course_name": "Fisica III",
-      "year": 2,
-      "semester": 2,
-      "hp": 78.75,
-      "hnp": 78.75,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "estadistica",
-      "course_name": "Estadistica",
-      "year": 2,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "estructuras_de_datos",
-      "course_name": "Estructuras De Datos",
-      "year": 2,
-      "semester": 2,
-      "hp": 78.75,
-      "hnp": 78.75,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "introduccion_a_sistemas_operativos",
-      "course_name": "Introduccion A Sistemas Operativos",
-      "year": 2,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "calculo_numerico",
-      "course_name": "Calculo Numerico",
-      "year": 3,
-      "semester": 1,
-      "hp": 78.75,
-      "hnp": 78.75,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingles_i_tecnico",
-      "course_name": "Ingles I (Tecnico)",
-      "year": 3,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "programacion_orientada_a_objeto",
-      "course_name": "Programaci\u00f3n Orientada A Objeto",
-      "year": 3,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "estructura_de_computadores",
-      "course_name": "Estructura De Computadores",
-      "year": 3,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "sistemas_digitales",
-      "course_name": "Sistemas Digitales",
-      "year": 3,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingles_ii",
-      "course_name": "Ingles II",
-      "year": 3,
-      "semester": 2,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "interfaz_de_usuario",
-      "course_name": "Interfaz De Usuario",
-      "year": 3,
-      "semester": 2,
-      "hp": 78.75,
-      "hnp": 78.75,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "taller_de_integracion",
-      "course_name": "Taller De Integraci\u00f3n",
-      "year": 3,
-      "semester": 2,
-      "hp": 145.0,
-      "hnp": 145.0,
-      "ct": 10,
-      "duration": "S"
-    },
-    {
-      "course_id": "taller_de_mantenimiento",
-      "course_name": "Taller De Mantenimiento",
-      "year": 3,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "matematicas_para_la_ciencia_de_la_computacion",
-      "course_name": "Matem\u00e1ticas Para La Ciencia De La Computaci\u00f3n",
-      "year": 3,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "economia_y_administracion_de_empresas",
-      "course_name": "Economia Y Administracion De Empresas",
-      "year": 4,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingles_iii",
-      "course_name": "Ingles III",
-      "year": 4,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 2,
-      "duration": "S"
-    },
-    {
-      "course_id": "formacion_de_emprendedores",
-      "course_name": "Formacion De Emprendedores",
-      "year": 4,
-      "semester": 1,
-      "hp": 29.0,
-      "hnp": 29.0,
-      "ct": 2,
-      "duration": "S"
-    },
-    {
-      "course_id": "diseno_de_algoritmos",
-      "course_name": "Dise\u00f1o De Algoritmos",
-      "year": 4,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "redes_de_computadores_i",
-      "course_name": "Redes De Computadores I",
-      "year": 4,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "sistemas_operativos",
-      "course_name": "Sistemas Operativos",
-      "year": 4,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "gestion_de_sistemas_contables",
-      "course_name": "Gesti\u00f3n De Sistemas Contables",
-      "year": 4,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 29.0,
-      "ct": 3,
-      "duration": "S"
-    },
-    {
-      "course_id": "investigacion_operativa",
-      "course_name": "Investigacion Operativa",
-      "year": 4,
-      "semester": 2,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingles_iv_conversacional",
-      "course_name": "Ingles IV (Conversacional)",
-      "year": 4,
-      "semester": 2,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "comportamiento_organizacional_y_liderazgo",
-      "course_name": "Comportamiento Organizacional Y Liderazgo",
-      "year": 4,
-      "semester": 2,
-      "hp": 58.0,
-      "hnp": 29.0,
-      "ct": 3,
-      "duration": "S"
-    },
-    {
-      "course_id": "bases_de_datos",
-      "course_name": "Bases De Datos",
-      "year": 4,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "redes_de_computadores_ii",
-      "course_name": "Redes De Computadores II",
-      "year": 4,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "sistemas_de_informacion_i",
-      "course_name": "Sistemas De Informaci\u00f3n I",
-      "year": 4,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingenieria_economica",
-      "course_name": "Ingenieria Economica",
-      "year": 5,
-      "semester": 1,
-      "hp": 52.5,
-      "hnp": 52.5,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "taller_de_bases_de_datos",
-      "course_name": "Taller De Bases De Datos",
-      "year": 5,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "taller_de_sistemas_computacionales",
-      "course_name": "Taller De Sistemas Computacionales",
-      "year": 5,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "ingenieria_de_software",
-      "course_name": "Ingenieria De Software",
-      "year": 5,
-      "semester": 1,
-      "hp": 78.75,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "sistemas_de_informacion_ii",
-      "course_name": "Sistemas De Informaci\u00f3n II",
-      "year": 5,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "preparacion_de_proyectos",
-      "course_name": "Preparacion De Proyectos",
-      "year": 5,
-      "semester": 2,
-      "hp": 52.5,
-      "hnp": 52.5,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "control_de_riesgo_operacional",
-      "course_name": "Control De Riesgo Operacional",
-      "year": 5,
-      "semester": 2,
-      "hp": 26.25,
-      "hnp": 26.25,
-      "ct": 2,
-      "duration": "S"
-    },
-    {
-      "course_id": "automatas_y_compiladores",
-      "course_name": "Aut\u00f3matas Y Compiladores",
-      "year": 5,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 58.0,
-      "ct": 5,
-      "duration": "S"
-    },
-    {
-      "course_id": "taller_de_integracion_ii",
-      "course_name": "Taller De Integraci\u00f3n II",
-      "year": 5,
-      "semester": 2,
-      "hp": 29.0,
-      "hnp": 116.0,
-      "ct": 5,
-      "duration": "S"
-    },
-    {
-      "course_id": "topicos_a",
-      "course_name": "T\u00f3picos A",
-      "year": 5,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 58.0,
-      "ct": 5,
-      "duration": "S"
-    },
-    {
-      "course_id": "topicos_b",
-      "course_name": "T\u00f3picos B",
-      "year": 5,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "electivo_i",
-      "course_name": "Electivo I",
-      "year": 5,
-      "semester": 2,
-      "hp": 87.0,
-      "hnp": 58.0,
-      "ct": 5,
-      "duration": "S"
-    },
-    {
-      "course_id": "direccion_de_empresas",
-      "course_name": "Direccion De Empresas",
-      "year": 6,
-      "semester": 1,
-      "hp": 52.5,
-      "hnp": 52.5,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "gestion_ambiental",
-      "course_name": "Gestion Ambiental",
-      "year": 6,
-      "semester": 1,
-      "hp": 58.0,
-      "hnp": 58.0,
-      "ct": 4,
-      "duration": "S"
-    },
-    {
-      "course_id": "gestion_informatica",
-      "course_name": "Gestion Informatica",
-      "year": 6,
-      "semester": 1,
-      "hp": 78.75,
-      "hnp": 78.75,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "topicos_c",
-      "course_name": "T\u00f3picos C",
-      "year": 6,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 87.0,
-      "ct": 6,
-      "duration": "S"
-    },
-    {
-      "course_id": "topicos_d",
-      "course_name": "T\u00f3picos D",
-      "year": 6,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 58.0,
-      "ct": 5,
-      "duration": "S"
-    },
-    {
-      "course_id": "electivo_ii",
-      "course_name": "Electivo II",
-      "year": 6,
-      "semester": 1,
-      "hp": 87.0,
-      "hnp": 29.0,
-      "ct": 5,
-      "duration": "S"
-    },
-    {
-      "course_id": "proyecto_de_titulo",
-      "course_name": "Proyecto De Titulo",
-      "year": 6,
-      "semester": 2,
-      "hp": 29.0,
-      "hnp": 841.0,
-      "ct": 30,
-      "duration": "S"
-    }
-  ]
+    "program_name":  "Ingenieria Civil en Computacion e Informatica",
+    "plan_year":  2020,
+    "source":  "Extracted from user-provided kardex images/PDF; contains only general course metadata.",
+    "courses":  [
+                    {
+                        "course_id":  "matematica_i",
+                        "course_name":  "Matematica I",
+                        "semester":  1,
+                        "hp":  174.0,
+                        "hnp":  232.0,
+                        "ct":  14,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "deportes_i",
+                        "course_name":  "Deportes I",
+                        "semester":  1,
+                        "hp":  26.25,
+                        "hnp":  26.25,
+                        "ct":  2,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "computacion",
+                        "course_name":  "Computacion",
+                        "semester":  1,
+                        "hp":  58.0,
+                        "hnp":  29.0,
+                        "ct":  3,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "introduccion_a_la_ingenieria",
+                        "course_name":  "Introduccion A La Ingenieria",
+                        "semester":  1,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "comunicacion_efectiva",
+                        "course_name":  "Comunicacion Efectiva",
+                        "semester":  1,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "matematica_ii",
+                        "course_name":  "Matematica II",
+                        "semester":  2,
+                        "hp":  145.0,
+                        "hnp":  203.0,
+                        "ct":  12,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "fisica_i",
+                        "course_name":  "Fisica I",
+                        "semester":  2,
+                        "hp":  116.0,
+                        "hnp":  145.0,
+                        "ct":  9,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingenieria_y_sociedad",
+                        "course_name":  "Ingenieria Y Sociedad",
+                        "semester":  2,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "deportes_ii",
+                        "course_name":  "Deportes II",
+                        "semester":  2,
+                        "hp":  26.25,
+                        "hnp":  26.25,
+                        "ct":  2,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "programacion_de_computadores",
+                        "course_name":  "Programacion De Computadores",
+                        "semester":  2,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "matematica_iii",
+                        "course_name":  "Matematica III",
+                        "semester":  3,
+                        "hp":  105.0,
+                        "hnp":  105.0,
+                        "ct":  9,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "fisica_ii",
+                        "course_name":  "Fisica II",
+                        "semester":  3,
+                        "hp":  105.0,
+                        "hnp":  105.0,
+                        "ct":  9,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "quimica_general",
+                        "course_name":  "Quimica General",
+                        "semester":  3,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "programacion_estructurada",
+                        "course_name":  "Programación Estructurada",
+                        "semester":  3,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "matematicas_iv",
+                        "course_name":  "Matematicas IV",
+                        "semester":  4,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "fisica_iii",
+                        "course_name":  "Fisica III",
+                        "semester":  4,
+                        "hp":  78.75,
+                        "hnp":  78.75,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "estadistica",
+                        "course_name":  "Estadistica",
+                        "semester":  4,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "estructuras_de_datos",
+                        "course_name":  "Estructuras De Datos",
+                        "semester":  4,
+                        "hp":  78.75,
+                        "hnp":  78.75,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "introduccion_a_sistemas_operativos",
+                        "course_name":  "Introduccion A Sistemas Operativos",
+                        "semester":  4,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "calculo_numerico",
+                        "course_name":  "Calculo Numerico",
+                        "semester":  5,
+                        "hp":  78.75,
+                        "hnp":  78.75,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingles_i_tecnico",
+                        "course_name":  "Ingles I (Tecnico)",
+                        "semester":  5,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "programacion_orientada_a_objeto",
+                        "course_name":  "Programación Orientada A Objeto",
+                        "semester":  5,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "estructura_de_computadores",
+                        "course_name":  "Estructura De Computadores",
+                        "semester":  5,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "sistemas_digitales",
+                        "course_name":  "Sistemas Digitales",
+                        "semester":  5,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingles_ii",
+                        "course_name":  "Ingles II",
+                        "semester":  6,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "interfaz_de_usuario",
+                        "course_name":  "Interfaz De Usuario",
+                        "semester":  6,
+                        "hp":  78.75,
+                        "hnp":  78.75,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "taller_de_integracion",
+                        "course_name":  "Taller De Integración",
+                        "semester":  6,
+                        "hp":  145.0,
+                        "hnp":  145.0,
+                        "ct":  10,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "taller_de_mantenimiento",
+                        "course_name":  "Taller De Mantenimiento",
+                        "semester":  6,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "matematicas_para_la_ciencia_de_la_computacion",
+                        "course_name":  "Matemáticas Para La Ciencia De La Computación",
+                        "semester":  6,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "economia_y_administracion_de_empresas",
+                        "course_name":  "Economia Y Administracion De Empresas",
+                        "semester":  7,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingles_iii",
+                        "course_name":  "Ingles III",
+                        "semester":  7,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  2,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "formacion_de_emprendedores",
+                        "course_name":  "Formacion De Emprendedores",
+                        "semester":  7,
+                        "hp":  29.0,
+                        "hnp":  29.0,
+                        "ct":  2,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "diseno_de_algoritmos",
+                        "course_name":  "Diseño De Algoritmos",
+                        "semester":  7,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "redes_de_computadores_i",
+                        "course_name":  "Redes De Computadores I",
+                        "semester":  7,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "sistemas_operativos",
+                        "course_name":  "Sistemas Operativos",
+                        "semester":  7,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "gestion_de_sistemas_contables",
+                        "course_name":  "Gestión De Sistemas Contables",
+                        "semester":  7,
+                        "hp":  58.0,
+                        "hnp":  29.0,
+                        "ct":  3,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "investigacion_operativa",
+                        "course_name":  "Investigacion Operativa",
+                        "semester":  8,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingles_iv_conversacional",
+                        "course_name":  "Ingles IV (Conversacional)",
+                        "semester":  8,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "comportamiento_organizacional_y_liderazgo",
+                        "course_name":  "Comportamiento Organizacional Y Liderazgo",
+                        "semester":  8,
+                        "hp":  58.0,
+                        "hnp":  29.0,
+                        "ct":  3,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "bases_de_datos",
+                        "course_name":  "Bases De Datos",
+                        "semester":  8,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "redes_de_computadores_ii",
+                        "course_name":  "Redes De Computadores II",
+                        "semester":  8,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "sistemas_de_informacion_i",
+                        "course_name":  "Sistemas De Información I",
+                        "semester":  8,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingenieria_economica",
+                        "course_name":  "Ingenieria Economica",
+                        "semester":  9,
+                        "hp":  52.5,
+                        "hnp":  52.5,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "taller_de_bases_de_datos",
+                        "course_name":  "Taller De Bases De Datos",
+                        "semester":  9,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "taller_de_sistemas_computacionales",
+                        "course_name":  "Taller De Sistemas Computacionales",
+                        "semester":  9,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "ingenieria_de_software",
+                        "course_name":  "Ingenieria De Software",
+                        "semester":  9,
+                        "hp":  78.75,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "sistemas_de_informacion_ii",
+                        "course_name":  "Sistemas De Información II",
+                        "semester":  9,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "preparacion_de_proyectos",
+                        "course_name":  "Preparacion De Proyectos",
+                        "semester":  10,
+                        "hp":  52.5,
+                        "hnp":  52.5,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "control_de_riesgo_operacional",
+                        "course_name":  "Control De Riesgo Operacional",
+                        "semester":  10,
+                        "hp":  26.25,
+                        "hnp":  26.25,
+                        "ct":  2,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "automatas_y_compiladores",
+                        "course_name":  "Autómatas Y Compiladores",
+                        "semester":  10,
+                        "hp":  87.0,
+                        "hnp":  58.0,
+                        "ct":  5,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "taller_de_integracion_ii",
+                        "course_name":  "Taller De Integración II",
+                        "semester":  10,
+                        "hp":  29.0,
+                        "hnp":  116.0,
+                        "ct":  5,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "topicos_a",
+                        "course_name":  "Tópicos A",
+                        "semester":  10,
+                        "hp":  87.0,
+                        "hnp":  58.0,
+                        "ct":  5,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "topicos_b",
+                        "course_name":  "Tópicos B",
+                        "semester":  10,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "electivo_i",
+                        "course_name":  "Electivo I",
+                        "semester":  10,
+                        "hp":  87.0,
+                        "hnp":  58.0,
+                        "ct":  5,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "direccion_de_empresas",
+                        "course_name":  "Direccion De Empresas",
+                        "semester":  11,
+                        "hp":  52.5,
+                        "hnp":  52.5,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "gestion_ambiental",
+                        "course_name":  "Gestion Ambiental",
+                        "semester":  11,
+                        "hp":  58.0,
+                        "hnp":  58.0,
+                        "ct":  4,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "gestion_informatica",
+                        "course_name":  "Gestion Informatica",
+                        "semester":  11,
+                        "hp":  78.75,
+                        "hnp":  78.75,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "topicos_c",
+                        "course_name":  "Tópicos C",
+                        "semester":  11,
+                        "hp":  87.0,
+                        "hnp":  87.0,
+                        "ct":  6,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "topicos_d",
+                        "course_name":  "Tópicos D",
+                        "semester":  11,
+                        "hp":  87.0,
+                        "hnp":  58.0,
+                        "ct":  5,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "electivo_ii",
+                        "course_name":  "Electivo II",
+                        "semester":  11,
+                        "hp":  87.0,
+                        "hnp":  29.0,
+                        "ct":  5,
+                        "duration":  "S"
+                    },
+                    {
+                        "course_id":  "proyecto_de_titulo",
+                        "course_name":  "Proyecto De Titulo",
+                        "semester":  12,
+                        "hp":  29.0,
+                        "hnp":  841.0,
+                        "ct":  30,
+                        "duration":  "S"
+                    }
+                ]
 }

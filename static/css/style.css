@@ -131,6 +131,7 @@ tr:hover td { background: var(--surface2); }
 .badge-fail    { background: #3b1a1a; color: var(--danger); }
 .badge-retry   { background: #3b2e1a; color: var(--warning); }
 .badge-force   { background: #1a2b3b; color: var(--info); }
+.badge-taken   { background: #14324a; color: #7dd3fc; }
 .badge-untaken { background: #22243a; color: var(--text-muted); }
 .badge-null    { background: #22243a; color: var(--text-muted); }
 .badge-active  { background: #1a3b2a; color: var(--success); }

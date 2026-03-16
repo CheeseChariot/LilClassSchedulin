@@ -25,6 +25,12 @@ When student status changes, kardex is synchronized automatically.
 3. Edit per-class fields: grade, period, notes.
 4. Save updates.
 
+## Course catalog workflow
+
+1. Open `/courses`.
+2. Review the catalog grouped by global semester number.
+3. Use `/api/courses` when you need the normalized JSON payload.
+
 ## Classroom workflow
 
 1. Open `/classrooms`.
@@ -41,3 +47,4 @@ When student status changes, kardex is synchronized automatically.
 - Student career is authoritative for class status.
 - Kardex keeps additional details per class while status mirrors career.
 - Teacher classes and student career classes are linked by `class_id`.
+- Student status semantics are: `Taken` for current courses, `Retry` for required retakes, `Fail` for failed-not-retaken, and `Force` for courses taken early or over prerequisites.
