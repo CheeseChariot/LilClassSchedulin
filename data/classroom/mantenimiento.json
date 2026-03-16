@@ -1,10 +1,7 @@
 {
   "id": "mantenimiento",
   "name": "Mantenimiento",
-  "location_guide": "Building C, ground floor — Mantenimiento zone.",
+  "location_guide": "Building C, ground floor",
   "capabilities": "Tools storage, workbenches, air conditioning, Wi-Fi",
-  "space_sqm": 240,
-  "chairs": 90,
-  "description": "Maintenance workshop zone with rooms 20-25 for equipment repair and maintenance sessions.",
-  "rooms": [20, 21, 22, 23, 24, 25]
+  "description": "Maintenance workshop zone"
 }

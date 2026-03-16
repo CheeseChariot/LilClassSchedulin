@@ -1,10 +1,7 @@
 {
   "id": "redes",
   "name": "Redes",
-  "location_guide": "Building D, first floor — Redes zone.",
+  "location_guide": "Building D, first floor",
   "capabilities": "Network equipment, switches, servers, projector, whiteboard, air conditioning, Wi-Fi",
-  "space_sqm": 300,
-  "chairs": 150,
-  "description": "Network lab zone with rooms 30-35 for networking and infrastructure sessions.",
-  "rooms": [30, 31, 32, 33, 34, 35]
+  "description": "Network lab zone"
 }

@@ -1,10 +1,7 @@
 {
   "id": "ti1",
   "name": "TI1",
-  "location_guide": "Building E, first floor — IT zone.",
+  "location_guide": "Building E, first floor",
   "capabilities": "20 workstations per room, projector, whiteboard, air conditioning, Wi-Fi",
-  "space_sqm": 360,
-  "chairs": 120,
-  "description": "IT Lab 1 zone with rooms 40-45 for information technology practical sessions.",
-  "rooms": [40, 41, 42, 43, 44, 45]
+  "description": "IT Lab 1 zone"
 }
