@@ -16,6 +16,228 @@ PROGRESSION_FILE = os.path.join(DATA_DIR, "progression.json")
 CLASS_STATUSES = ["Untaken", "Pass", "Fail", "Retry", "Force"]
 
 
+def _default_badges_data() -> dict:
+    return {
+        "badges": [
+            {
+                "id": "first_pass",
+                "name": "First Pass",
+                "description": "Pass your first class",
+                "achieved": False,
+            },
+            {
+                "id": "honor_roll",
+                "name": "Honor Roll",
+                "description": "Pass 5 classes with distinction",
+                "achieved": False,
+            },
+            {
+                "id": "perfect_semester",
+                "name": "Perfect Semester",
+                "description": "Pass all classes in a single semester without retries",
+                "achieved": False,
+            },
+        ]
+    }
+
+
+def _default_progression_data() -> dict:
+    return {
+        "requirements": [
+            {
+                "badge_id": "first_pass",
+                "description": "Pass at least 1 class",
+            },
+            {
+                "badge_id": "honor_roll",
+                "description": "Accumulate 5 passed classes",
+            },
+            {
+                "badge_id": "perfect_semester",
+                "description": "Complete a full semester (all classes passed, none retried)",
+            },
+        ]
+    }
+
+
+def _parse_optional_int(value):
+    """Return int from string/number, or None if blank/invalid."""
+    if value is None:
+        return None
+    if isinstance(value, str):
+        value = value.strip()
+        if not value:
+            return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _parse_optional_float(value):
+    """Return float from string/number, or None if blank/invalid."""
+    if value is None:
+        return None
+    if isinstance(value, str):
+        value = value.strip()
+        if not value:
+            return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _coerce_text(value, default="") -> str:
+    if value is None:
+        return default
+    return str(value).strip() or default
+
+
+def _normalize_teacher(data: dict, fallback_id: str) -> dict:
+    teacher_id = _safe_filename(_coerce_text(data.get("id"))) or _safe_filename(fallback_id) or fallback_id
+    name = _coerce_text(data.get("name"), teacher_id.replace("_", " ").title())
+    raw_classes = data.get("classes")
+    if not isinstance(raw_classes, list):
+        raw_classes = []
+
+    classes = []
+    seen_ids = set()
+    for cls in raw_classes:
+        if not isinstance(cls, dict):
+            continue
+        class_name = _coerce_text(cls.get("name"))
+        class_id = _safe_filename(_coerce_text(cls.get("id")) or class_name)
+        if not class_id or class_id in seen_ids:
+            continue
+        seen_ids.add(class_id)
+
+        raw_schedule = cls.get("schedule")
+        schedule = None
+        if isinstance(raw_schedule, dict):
+            cleaned_schedule = {}
+            for day, value in raw_schedule.items():
+                day_name = _coerce_text(day).lower()
+                time_range = _coerce_text(value)
+                if day_name and time_range:
+                    cleaned_schedule[day_name] = time_range
+            schedule = cleaned_schedule or None
+
+        classes.append(
+            {
+                "id": class_id,
+                "name": class_name or class_id,
+                "schedule": schedule,
+                "status": _coerce_text(cls.get("status"), "") or None,
+            }
+        )
+
+    return {"id": teacher_id, "name": name, "classes": classes}
+
+
+def _normalize_student(data: dict, fallback_id: str) -> dict:
+    student_id = _safe_filename(_coerce_text(data.get("id"))) or _safe_filename(fallback_id) or fallback_id
+    name = _coerce_text(data.get("name"), student_id.replace("_", " ").title())
+    raw_career = data.get("career")
+    if not isinstance(raw_career, list):
+        raw_career = []
+
+    career = []
+    seen_ids = set()
+    for entry in raw_career:
+        if not isinstance(entry, dict):
+            continue
+        class_name = _coerce_text(entry.get("class_name"))
+        class_id = _safe_filename(_coerce_text(entry.get("class_id")) or class_name)
+        if not class_id or class_id in seen_ids:
+            continue
+        seen_ids.add(class_id)
+        status = _coerce_text(entry.get("status"), "Untaken")
+        if status not in CLASS_STATUSES:
+            status = "Untaken"
+        career.append(
+            {
+                "class_id": class_id,
+                "class_name": class_name or class_id,
+                "status": status,
+            }
+        )
+
+    return {"id": student_id, "name": name, "career": career}
+
+
+def _normalize_classroom(data: dict, fallback_id: str) -> dict:
+    room_id = _safe_filename(_coerce_text(data.get("id"))) or _safe_filename(fallback_id) or fallback_id
+    default_name = room_id.replace("_", " ").title()
+    return {
+        "id": room_id,
+        "name": _coerce_text(data.get("name"), default_name),
+        "location_guide": _coerce_text(data.get("location_guide")),
+        "capabilities": _coerce_text(data.get("capabilities")),
+        "space_sqm": _parse_optional_float(data.get("space_sqm")),
+        "chairs": _parse_optional_int(data.get("chairs")),
+        "description": _coerce_text(data.get("description")),
+    }
+
+
+def _normalize_badges(data) -> dict:
+    raw_badges = data.get("badges") if isinstance(data, dict) else None
+    if not isinstance(raw_badges, list):
+        raw_badges = _default_badges_data()["badges"]
+
+    badges = []
+    seen_ids = set()
+    for badge in raw_badges:
+        if not isinstance(badge, dict):
+            continue
+        badge_id = _safe_filename(_coerce_text(badge.get("id")))
+        if not badge_id or badge_id in seen_ids:
+            continue
+        seen_ids.add(badge_id)
+        badges.append(
+            {
+                "id": badge_id,
+                "name": _coerce_text(badge.get("name"), badge_id.replace("_", " ").title()),
+                "description": _coerce_text(badge.get("description")),
+                "achieved": bool(badge.get("achieved", False)),
+            }
+        )
+
+    return {"badges": badges}
+
+
+def _normalize_progression(data) -> dict:
+    raw_requirements = data.get("requirements") if isinstance(data, dict) else None
+    if not isinstance(raw_requirements, list):
+        raw_requirements = _default_progression_data()["requirements"]
+
+    requirements = []
+    for req in raw_requirements:
+        if not isinstance(req, dict):
+            continue
+        badge_id = _safe_filename(_coerce_text(req.get("badge_id")))
+        if not badge_id:
+            continue
+        requirements.append(
+            {
+                "badge_id": badge_id,
+                "description": _coerce_text(req.get("description")),
+            }
+        )
+
+    return {"requirements": requirements}
+
+
+def _normalizer_for_directory(directory: str):
+    if os.path.normpath(directory) == os.path.normpath(TEACHER_DIR):
+        return _normalize_teacher
+    if os.path.normpath(directory) == os.path.normpath(STUDENT_DIR):
+        return _normalize_student
+    if os.path.normpath(directory) == os.path.normpath(CLASSROOM_DIR):
+        return _normalize_classroom
+    return None
+
+
 # ── helpers ──────────────────────────────────────────────────────────────────
 
 def _load_json(path):
@@ -42,13 +264,34 @@ def _safe_filename(name: str) -> str:
 def _list_profiles(directory: str) -> list[dict]:
     if not os.path.isdir(directory):
         return []
+
+    normalizer = _normalizer_for_directory(directory)
     profiles = []
     for fname in sorted(os.listdir(directory)):
         if fname.endswith(".json"):
-            profile = _load_json(os.path.join(directory, fname))
+            fpath = os.path.join(directory, fname)
+            profile = _load_json(fpath)
+            if not isinstance(profile, dict):
+                profile = {}
+            if normalizer:
+                fallback_id = os.path.splitext(fname)[0]
+                profile = normalizer(profile, fallback_id)
             if profile:
                 profiles.append(profile)
     return profiles
+
+
+def _ensure_data_layout() -> None:
+    for folder in [DATA_DIR, TEACHER_DIR, STUDENT_DIR, KARDEX_DIR, CLASSROOM_DIR]:
+        os.makedirs(folder, exist_ok=True)
+
+    badges_data = _load_json(BADGES_FILE)
+    if not isinstance(badges_data, dict) or not isinstance(badges_data.get("badges"), list):
+        _save_json(BADGES_FILE, _default_badges_data())
+
+    progression_data = _load_json(PROGRESSION_FILE)
+    if not isinstance(progression_data, dict) or not isinstance(progression_data.get("requirements"), list):
+        _save_json(PROGRESSION_FILE, _default_progression_data())
 
 
 # ── kardex helpers ───────────────────────────────────────────────────────────
@@ -68,6 +311,62 @@ def _init_kardex(student_id: str, student_name: str) -> None:
         })
 
 
+def _normalize_kardex(data, student: dict) -> dict:
+    if not isinstance(data, dict):
+        data = {}
+
+    entries = []
+    entry_map = {}
+    raw_entries = data.get("entries")
+    if not isinstance(raw_entries, list):
+        raw_entries = []
+
+    for entry in raw_entries:
+        if not isinstance(entry, dict):
+            continue
+        class_id = _safe_filename(_coerce_text(entry.get("class_id")))
+        if not class_id:
+            continue
+        status = _coerce_text(entry.get("status"), "Untaken")
+        if status not in CLASS_STATUSES:
+            status = "Untaken"
+        normalized = {
+            "class_id": class_id,
+            "class_name": _coerce_text(entry.get("class_name"), class_id),
+            "status": status,
+            "grade": _parse_optional_float(entry.get("grade")),
+            "period": _coerce_text(entry.get("period"), "") or None,
+            "notes": _coerce_text(entry.get("notes")),
+        }
+        entry_map[class_id] = normalized
+
+    for career_entry in student.get("career", []):
+        class_id = career_entry["class_id"]
+        status = career_entry["status"]
+        class_name = career_entry["class_name"]
+        if class_id in entry_map:
+            entry_map[class_id]["status"] = status
+            entry_map[class_id]["class_name"] = class_name or entry_map[class_id]["class_name"]
+        else:
+            entry_map[class_id] = {
+                "class_id": class_id,
+                "class_name": class_name,
+                "status": status,
+                "grade": None,
+                "period": None,
+                "notes": "",
+            }
+
+    for entry in entry_map.values():
+        entries.append(entry)
+
+    return {
+        "student_id": student["id"],
+        "student_name": student["name"],
+        "entries": entries,
+    }
+
+
 def _sync_kardex(student: dict) -> None:
     """Keep the kardex in sync with the student's career list.
 
@@ -76,32 +375,11 @@ def _sync_kardex(student: dict) -> None:
     * Never removes entries — historical records are preserved.
     """
     path = _kardex_path(student["id"])
-    kardex = _load_json(path)
-    if not kardex:
-        kardex = {
-            "student_id": student["id"],
-            "student_name": student["name"],
-            "entries": [],
-        }
-
-    entry_map = {e["class_id"]: e for e in kardex["entries"]}
-
-    for career_cls in student.get("career", []):
-        cid = career_cls["class_id"]
-        if cid in entry_map:
-            entry_map[cid]["status"] = career_cls["status"]
-        else:
-            entry_map[cid] = {
-                "class_id": cid,
-                "class_name": career_cls["class_name"],
-                "status": career_cls["status"],
-                "grade": None,
-                "period": None,
-                "notes": "",
-            }
-
-    kardex["entries"] = list(entry_map.values())
+    kardex = _normalize_kardex(_load_json(path), student)
     _save_json(path, kardex)
+
+
+_ensure_data_layout()
 
 
 # ── views ─────────────────────────────────────────────────────────────────────
@@ -111,7 +389,7 @@ def index():
     teachers = _list_profiles(TEACHER_DIR)
     students = _list_profiles(STUDENT_DIR)
     classrooms = _list_profiles(CLASSROOM_DIR)
-    badges = _load_json(BADGES_FILE).get("badges", [])
+    badges = _normalize_badges(_load_json(BADGES_FILE)).get("badges", [])
     achieved = sum(1 for b in badges if b.get("achieved"))
     return render_template(
         "index.html",
@@ -136,7 +414,7 @@ def teacher_profile(teacher_id):
     path = os.path.join(TEACHER_DIR, f"{teacher_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    teacher = _load_json(path)
+    teacher = _normalize_teacher(_load_json(path), teacher_id)
     return render_template("teacher_profile.html", teacher=teacher)
 
 
@@ -160,14 +438,20 @@ def add_class(teacher_id):
     path = os.path.join(TEACHER_DIR, f"{teacher_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    teacher = _load_json(path)
+    teacher = _normalize_teacher(_load_json(path), teacher_id)
     if request.method == "POST":
         class_name = request.form.get("class_name", "").strip()
         if not class_name:
             return render_template("add_class.html", teacher=teacher, error="Class name is required.")
         class_id = _safe_filename(class_name)
+        if any(existing.get("id") == class_id for existing in teacher.get("classes", [])):
+            return render_template(
+                "add_class.html",
+                teacher=teacher,
+                error="A class with that name already exists for this teacher.",
+            )
         new_class = {"id": class_id, "name": class_name, "schedule": None, "status": None}
-        teacher["classes"].append(new_class)
+        teacher.setdefault("classes", []).append(new_class)
         _save_json(path, teacher)
         return redirect(url_for("teacher_profile", teacher_id=teacher_id))
     return render_template("add_class.html", teacher=teacher, error=None)
@@ -178,8 +462,8 @@ def edit_schedule(teacher_id, class_id):
     path = os.path.join(TEACHER_DIR, f"{teacher_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    teacher = _load_json(path)
-    cls = next((c for c in teacher["classes"] if c["id"] == class_id), None)
+    teacher = _normalize_teacher(_load_json(path), teacher_id)
+    cls = next((c for c in teacher.get("classes", []) if c.get("id") == class_id), None)
     if cls is None:
         abort(404)
     days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
@@ -210,7 +494,7 @@ def student_profile(student_id):
     path = os.path.join(STUDENT_DIR, f"{student_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    student = _load_json(path)
+    student = _normalize_student(_load_json(path), student_id)
     return render_template("student_profile.html", student=student, statuses=CLASS_STATUSES)
 
 
@@ -235,14 +519,17 @@ def update_student_career(student_id):
     path = os.path.join(STUDENT_DIR, f"{student_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    student = _load_json(path)
+    student = _normalize_student(_load_json(path), student_id)
     class_id = request.form.get("class_id", "").strip()
+    if not class_id:
+        abort(400)
     new_status = request.form.get("status", "Untaken")
     if new_status not in CLASS_STATUSES:
         abort(400)
-    entry = next((c for c in student["career"] if c["class_id"] == class_id), None)
-    if entry:
-        entry["status"] = new_status
+    entry = next((c for c in student.get("career", []) if c.get("class_id") == class_id), None)
+    if entry is None:
+        abort(404)
+    entry["status"] = new_status
     _save_json(path, student)
     _sync_kardex(student)
     return redirect(url_for("student_profile", student_id=student_id))
@@ -253,7 +540,7 @@ def add_student_class(student_id):
     path = os.path.join(STUDENT_DIR, f"{student_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    student = _load_json(path)
+    student = _normalize_student(_load_json(path), student_id)
     # Collect all classes from all teachers
     all_classes = []
     for teacher in _list_profiles(TEACHER_DIR):
@@ -264,8 +551,11 @@ def add_student_class(student_id):
         class_name = request.form.get("class_name", "").strip()
         if not class_id or not class_name:
             return render_template("add_student_class.html", student=student, all_classes=all_classes, statuses=CLASS_STATUSES, error="Class info required.")
+        class_id = _safe_filename(class_id)
+        if not class_id:
+            return render_template("add_student_class.html", student=student, all_classes=all_classes, statuses=CLASS_STATUSES, error="Class ID is invalid.")
         # Prevent duplicates
-        if any(c["class_id"] == class_id for c in student["career"]):
+        if any(c.get("class_id") == class_id for c in student.get("career", [])):
             return render_template("add_student_class.html", student=student, all_classes=all_classes, statuses=CLASS_STATUSES, error="Class already in career.")
         status = request.form.get("status", "Untaken")
         if status not in CLASS_STATUSES:
@@ -284,13 +574,12 @@ def student_kardex(student_id):
     student_path = os.path.join(STUDENT_DIR, f"{student_id}.json")
     if not os.path.isfile(student_path):
         abort(404)
-    student = _load_json(student_path)
+    student = _normalize_student(_load_json(student_path), student_id)
     kardex_path = _kardex_path(student_id)
     if not os.path.isfile(kardex_path):
         _init_kardex(student_id, student["name"])
-        _sync_kardex(student)
-    kardex = _load_json(kardex_path)
-    badges = _load_json(BADGES_FILE).get("badges", [])
+    kardex = _normalize_kardex(_load_json(kardex_path), student)
+    badges = _normalize_badges(_load_json(BADGES_FILE)).get("badges", [])
     achieved_badges = [b for b in badges if b.get("achieved")]
     return render_template(
         "kardex.html",
@@ -303,41 +592,26 @@ def student_kardex(student_id):
 
 @app.route("/student/<student_id>/kardex/update", methods=["POST"])
 def update_kardex_entry(student_id):
+    student_path = os.path.join(STUDENT_DIR, f"{student_id}.json")
+    if not os.path.isfile(student_path):
+        abort(404)
+    student = _normalize_student(_load_json(student_path), student_id)
+
     kardex_path = _kardex_path(student_id)
     if not os.path.isfile(kardex_path):
-        abort(404)
-    kardex = _load_json(kardex_path)
+        _init_kardex(student_id, student["name"])
+    kardex = _normalize_kardex(_load_json(kardex_path), student)
     class_id = request.form.get("class_id", "").strip()
-    entry = next((e for e in kardex["entries"] if e["class_id"] == class_id), None)
+    if not class_id:
+        abort(400)
+    entry = next((e for e in kardex.get("entries", []) if e.get("class_id") == class_id), None)
     if entry is None:
         abort(404)
-    raw_grade = request.form.get("grade", "").strip()
-    try:
-        entry["grade"] = float(raw_grade) if raw_grade else None
-    except ValueError:
-        entry["grade"] = None
+    entry["grade"] = _parse_optional_float(request.form.get("grade", ""))
     entry["period"] = request.form.get("period", "").strip() or None
     entry["notes"] = request.form.get("notes", "").strip()
     _save_json(kardex_path, kardex)
     return redirect(url_for("student_kardex", student_id=student_id))
-
-
-def _parse_optional_int(value: str):
-    """Return int from string, or None if blank/invalid."""
-    value = value.strip()
-    try:
-        return int(value) if value else None
-    except ValueError:
-        return None
-
-
-def _parse_optional_float(value: str):
-    """Return float from string, or None if blank/invalid."""
-    value = value.strip()
-    try:
-        return float(value) if value else None
-    except ValueError:
-        return None
 
 
 # ── classrooms ────────────────────────────────────────────────────────────────
@@ -353,7 +627,7 @@ def classroom_profile(classroom_id):
     path = os.path.join(CLASSROOM_DIR, f"{classroom_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    room = _load_json(path)
+    room = _normalize_classroom(_load_json(path), classroom_id)
     return render_template("classroom_profile.html", room=room)
 
 
@@ -387,7 +661,7 @@ def edit_classroom(classroom_id):
     path = os.path.join(CLASSROOM_DIR, f"{classroom_id}.json")
     if not os.path.isfile(path):
         abort(404)
-    room = _load_json(path)
+    room = _normalize_classroom(_load_json(path), classroom_id)
     if request.method == "POST":
         room["chairs"] = _parse_optional_int(request.form.get("chairs", ""))
         room["space_sqm"] = _parse_optional_float(request.form.get("space_sqm", ""))
@@ -403,19 +677,19 @@ def edit_classroom(classroom_id):
 
 @app.route("/badges")
 def badges():
-    data = _load_json(BADGES_FILE)
-    progression = _load_json(PROGRESSION_FILE)
-    req_map = {r["badge_id"]: r["description"] for r in progression.get("requirements", [])}
+    data = _normalize_badges(_load_json(BADGES_FILE))
+    progression = _normalize_progression(_load_json(PROGRESSION_FILE))
+    req_map = {r.get("badge_id"): r.get("description", "") for r in progression.get("requirements", [])}
     for badge in data.get("badges", []):
-        badge["requirement"] = req_map.get(badge["id"], "")
+        badge["requirement"] = req_map.get(badge.get("id"), "")
     return render_template("badges.html", badges=data.get("badges", []))
 
 
 @app.route("/badge/<badge_id>/toggle", methods=["POST"])
 def toggle_badge(badge_id):
-    data = _load_json(BADGES_FILE)
+    data = _normalize_badges(_load_json(BADGES_FILE))
     for badge in data.get("badges", []):
-        if badge["id"] == badge_id:
+        if badge.get("id") == badge_id:
             badge["achieved"] = not badge.get("achieved", False)
             break
     _save_json(BADGES_FILE, data)
@@ -424,12 +698,12 @@ def toggle_badge(badge_id):
 
 @app.route("/progression")
 def progression():
-    data = _load_json(PROGRESSION_FILE)
-    badges_data = _load_json(BADGES_FILE)
-    badge_map = {b["id"]: b for b in badges_data.get("badges", [])}
+    data = _normalize_progression(_load_json(PROGRESSION_FILE))
+    badges_data = _normalize_badges(_load_json(BADGES_FILE))
+    badge_map = {b.get("id"): b for b in badges_data.get("badges", []) if b.get("id")}
     requirements = data.get("requirements", [])
     for req in requirements:
-        req["badge"] = badge_map.get(req["badge_id"], {})
+        req["badge"] = badge_map.get(req.get("badge_id"), {})
     return render_template("progression.html", requirements=requirements)
 
 
@@ -447,20 +721,26 @@ def api_students():
 
 @app.route("/api/student/<student_id>/kardex")
 def api_student_kardex(student_id):
+    student_path = os.path.join(STUDENT_DIR, f"{student_id}.json")
+    if not os.path.isfile(student_path):
+        abort(404)
+    student = _normalize_student(_load_json(student_path), student_id)
+
     kardex_path = _kardex_path(student_id)
     if not os.path.isfile(kardex_path):
-        abort(404)
-    return jsonify(_load_json(kardex_path))
+        _init_kardex(student_id, student["name"])
+    kardex = _normalize_kardex(_load_json(kardex_path), student)
+    return jsonify(kardex)
 
 
 @app.route("/api/badges")
 def api_badges():
-    return jsonify(_load_json(BADGES_FILE))
+    return jsonify(_normalize_badges(_load_json(BADGES_FILE)))
 
 
 @app.route("/api/progression")
 def api_progression():
-    return jsonify(_load_json(PROGRESSION_FILE))
+    return jsonify(_normalize_progression(_load_json(PROGRESSION_FILE)))
 
 
 @app.route("/api/classrooms")
