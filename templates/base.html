@@ -10,6 +10,7 @@
   <nav>
     <span class="brand">🎓 LilClassSchedulin</span>
     <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Dashboard</a>
+    <a href="{{ url_for('courses_catalog') }}" {% if request.endpoint == 'courses_catalog' %}class="active"{% endif %}>Courses</a>
     <a href="{{ url_for('teachers') }}" {% if 'teacher' in request.endpoint %}class="active"{% endif %}>Teachers</a>
     <a href="{{ url_for('students') }}" {% if 'student' in request.endpoint %}class="active"{% endif %}>Students</a>
     <a href="{{ url_for('classrooms') }}" {% if 'classroom' in request.endpoint %}class="active"{% endif %}>Classrooms</a>

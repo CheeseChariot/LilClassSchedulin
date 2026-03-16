@@ -12,8 +12,12 @@ KARDEX_DIR = os.path.join(DATA_DIR, "kardex")
 CLASSROOM_DIR = os.path.join(DATA_DIR, "classroom")
 BADGES_FILE = os.path.join(DATA_DIR, "badges.json")
 PROGRESSION_FILE = os.path.join(DATA_DIR, "progression.json")
+COURSES_FILE = os.path.join(DATA_DIR, "courses.json")
+SCHEBLOCKS_FILE = os.path.join(DATA_DIR, "scheblocks.json")
 
 CLASS_STATUSES = ["Untaken", "Pass", "Fail", "Retry", "Force"]
+
+# Source of truth for schedule blocks is data/scheblocks.json.
 
 
 def _default_badges_data() -> dict:
@@ -57,6 +61,21 @@ def _default_progression_data() -> dict:
                 "description": "Complete a full semester (all classes passed, none retried)",
             },
         ]
+    }
+
+
+def _default_courses_data() -> dict:
+    return {
+        "program_name": "Ingenieria Civil en Computacion e Informatica",
+        "plan_year": 2020,
+        "source": "General course metadata catalog (no student performance data).",
+        "courses": [],
+    }
+
+
+def _default_scheblocks_data() -> dict:
+    return {
+        "blocks": [],
     }
 
 
@@ -228,6 +247,94 @@ def _normalize_progression(data) -> dict:
     return {"requirements": requirements}
 
 
+def _normalize_courses(data) -> dict:
+    if not isinstance(data, dict):
+        data = {}
+
+    raw_courses = data.get("courses")
+    if not isinstance(raw_courses, list):
+        raw_courses = []
+
+    courses = []
+    seen_ids = set()
+    for course in raw_courses:
+        if not isinstance(course, dict):
+            continue
+
+        course_name = _coerce_text(course.get("course_name") or course.get("name") or course.get("class_name"))
+        course_id = _safe_filename(_coerce_text(course.get("course_id") or course.get("id")) or course_name)
+        if not course_id or course_id in seen_ids:
+            continue
+        seen_ids.add(course_id)
+
+        duration = _coerce_text(course.get("duration"), "S").upper()
+        if duration not in {"S", "A", "CV", "EE"}:
+            duration = "S"
+
+        courses.append(
+            {
+                "course_id": course_id,
+                "course_name": course_name or course_id,
+                "year": _parse_optional_int(course.get("year")),
+                "semester": _parse_optional_int(course.get("semester")),
+                "hp": _parse_optional_float(course.get("hp")),
+                "hnp": _parse_optional_float(course.get("hnp")),
+                "ct": _parse_optional_int(course.get("ct")),
+                "duration": duration,
+            }
+        )
+
+    courses.sort(
+        key=lambda c: (
+            c.get("year") if c.get("year") is not None else 999,
+            c.get("semester") if c.get("semester") is not None else 99,
+            c.get("course_name", "").lower(),
+        )
+    )
+
+    return {
+        "program_name": _coerce_text(data.get("program_name"), "Course Catalog"),
+        "plan_year": _parse_optional_int(data.get("plan_year")),
+        "source": _coerce_text(data.get("source")),
+        "courses": courses,
+    }
+
+
+def _normalize_scheblocks(data) -> dict:
+    if not isinstance(data, dict):
+        data = {}
+
+    raw_blocks = data.get("blocks")
+    if not isinstance(raw_blocks, list):
+        raw_blocks = []
+
+    blocks = []
+    seen_ids = set()
+    for i, block in enumerate(raw_blocks, start=1):
+        if not isinstance(block, dict):
+            continue
+
+        time_range = _coerce_text(block.get("time"))
+        if not time_range:
+            continue
+
+        block_id = _safe_filename(_coerce_text(block.get("id"))) or f"b{i}"
+        if block_id in seen_ids:
+            continue
+        seen_ids.add(block_id)
+
+        label = _coerce_text(block.get("label"), f"Block {len(blocks) + 1}")
+        blocks.append(
+            {
+                "id": block_id,
+                "label": label,
+                "time": time_range,
+            }
+        )
+
+    return {"blocks": blocks}
+
+
 def _normalizer_for_directory(directory: str):
     if os.path.normpath(directory) == os.path.normpath(TEACHER_DIR):
         return _normalize_teacher
@@ -248,6 +355,14 @@ def _load_json(path):
         return {}
     except json.JSONDecodeError:
         return {}
+
+
+def _load_scheblocks() -> list[dict]:
+    return _normalize_scheblocks(_load_json(SCHEBLOCKS_FILE)).get("blocks", [])
+
+
+def _scheblock_map(blocks: list[dict]) -> dict:
+    return {block["time"]: block for block in blocks if block.get("time")}
 
 
 def _save_json(path, data):
@@ -292,6 +407,14 @@ def _ensure_data_layout() -> None:
     progression_data = _load_json(PROGRESSION_FILE)
     if not isinstance(progression_data, dict) or not isinstance(progression_data.get("requirements"), list):
         _save_json(PROGRESSION_FILE, _default_progression_data())
+
+    courses_data = _load_json(COURSES_FILE)
+    if not isinstance(courses_data, dict) or not isinstance(courses_data.get("courses"), list):
+        _save_json(COURSES_FILE, _default_courses_data())
+
+    scheblocks_data = _load_json(SCHEBLOCKS_FILE)
+    if not isinstance(scheblocks_data, dict) or not isinstance(scheblocks_data.get("blocks"), list):
+        _save_json(SCHEBLOCKS_FILE, _default_scheblocks_data())
 
 
 # ── kardex helpers ───────────────────────────────────────────────────────────
@@ -389,6 +512,7 @@ def index():
     teachers = _list_profiles(TEACHER_DIR)
     students = _list_profiles(STUDENT_DIR)
     classrooms = _list_profiles(CLASSROOM_DIR)
+    courses_count = len(_normalize_courses(_load_json(COURSES_FILE)).get("courses", []))
     badges = _normalize_badges(_load_json(BADGES_FILE)).get("badges", [])
     achieved = sum(1 for b in badges if b.get("achieved"))
     return render_template(
@@ -396,6 +520,7 @@ def index():
         teachers=teachers,
         students=students,
         classrooms=classrooms,
+        courses_count=courses_count,
         badges=badges,
         achieved=achieved,
     )
@@ -415,7 +540,8 @@ def teacher_profile(teacher_id):
     if not os.path.isfile(path):
         abort(404)
     teacher = _normalize_teacher(_load_json(path), teacher_id)
-    return render_template("teacher_profile.html", teacher=teacher)
+    blocks = _load_scheblocks()
+    return render_template("teacher_profile.html", teacher=teacher, block_map=_scheblock_map(blocks))
 
 
 @app.route("/teacher/add", methods=["GET", "POST"])
@@ -466,19 +592,21 @@ def edit_schedule(teacher_id, class_id):
     cls = next((c for c in teacher.get("classes", []) if c.get("id") == class_id), None)
     if cls is None:
         abort(404)
+    blocks = _load_scheblocks()
+    valid_times = {block.get("time") for block in blocks if block.get("time")}
     days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
     if request.method == "POST":
         schedule = {}
         for day in days:
             val = request.form.get(day, "").strip()
-            if val:
+            if val and (not valid_times or val in valid_times):
                 schedule[day] = val
         cls["schedule"] = schedule if schedule else None
         status = request.form.get("status", "").strip() or None
         cls["status"] = status
         _save_json(path, teacher)
         return redirect(url_for("teacher_profile", teacher_id=teacher_id))
-    return render_template("edit_schedule.html", teacher=teacher, cls=cls, days=days)
+    return render_template("edit_schedule.html", teacher=teacher, cls=cls, days=days, blocks=blocks)
 
 
 # ── students ──────────────────────────────────────────────────────────────────
@@ -622,6 +750,22 @@ def classrooms():
     return render_template("classrooms.html", classrooms=rooms)
 
 
+@app.route("/courses")
+def courses_catalog():
+    catalog = _normalize_courses(_load_json(COURSES_FILE))
+
+    groups = []
+    current_key = None
+    for course in catalog.get("courses", []):
+        key = (course.get("year"), course.get("semester"))
+        if key != current_key:
+            groups.append({"year": key[0], "semester": key[1], "courses": []})
+            current_key = key
+        groups[-1]["courses"].append(course)
+
+    return render_template("courses.html", catalog=catalog, groups=groups)
+
+
 @app.route("/classroom/<classroom_id>")
 def classroom_profile(classroom_id):
     path = os.path.join(CLASSROOM_DIR, f"{classroom_id}.json")
@@ -741,6 +885,11 @@ def api_badges():
 @app.route("/api/progression")
 def api_progression():
     return jsonify(_normalize_progression(_load_json(PROGRESSION_FILE)))
+
+
+@app.route("/api/courses")
+def api_courses():
+    return jsonify(_normalize_courses(_load_json(COURSES_FILE)))
 
 
 @app.route("/api/classrooms")

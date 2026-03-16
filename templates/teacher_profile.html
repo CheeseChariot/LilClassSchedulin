@@ -36,7 +36,9 @@
         <td>
           {% if cls.schedule %}
             {% for day, time in cls.schedule.items() %}
-              <span class="muted">{{ day | capitalize }}: {{ time }}</span><br>
+              <span class="muted">{{ day | capitalize }}:
+                {% if time in block_map %}{{ block_map[time].label }} · {{ time }}{% else %}{{ time }}{% endif %}
+              </span><br>
             {% endfor %}
           {% else %}
             <span class="muted">No schedule</span>

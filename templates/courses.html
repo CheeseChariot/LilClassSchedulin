@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Courses — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Courses Catalog</h1>
+  <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+
+<div class="card">
+  <div class="card-title">{{ catalog.program_name }}</div>
+  <p class="muted">
+    {% if catalog.plan_year %}Plan {{ catalog.plan_year }}{% else %}Plan year not specified{% endif %}
+    · {{ catalog.courses | length }} total course(s)
+  </p>
+  {% if catalog.source %}
+  <p class="muted mt-1">Source: {{ catalog.source }}</p>
+  {% endif %}
+</div>
+
+{% if groups %}
+  {% for group in groups %}
+  <div class="section-header mt-2">
+    <h2>Year {{ group.year }} · Semester {{ group.semester }}</h2>
+    <span class="muted">{{ group.courses | length }} course(s)</span>
+  </div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>H.P.</th>
+          <th>H.N.P.</th>
+          <th>CT</th>
+          <th>Dur.</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in group.courses %}
+        <tr>
+          <td><strong>{{ course.course_name }}</strong></td>
+          <td>{{ '%g' | format(course.hp) if course.hp is not none else '—' }}</td>
+          <td>{{ '%g' | format(course.hnp) if course.hnp is not none else '—' }}</td>
+          <td>{{ course.ct if course.ct is not none else '—' }}</td>
+          <td>{{ course.duration or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+{% else %}
+<p class="muted">No courses loaded yet.</p>
+{% endif %}
+{% endblock %}

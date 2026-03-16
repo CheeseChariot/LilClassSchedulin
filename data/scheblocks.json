@@ -1,0 +1,11 @@
+{
+  "blocks": [
+    {"id": "b1", "label": "Block 1", "time": "08:00-09:30"},
+    {"id": "b2", "label": "Block 2", "time": "09:40-11:10"},
+    {"id": "b3", "label": "Block 3", "time": "11:20-12:50"},
+    {"id": "b4", "label": "Block 4", "time": "12:50-14:20"},
+    {"id": "b5", "label": "Block 5", "time": "14:30-16:00"},
+    {"id": "b6", "label": "Block 6", "time": "16:10-17:40"},
+    {"id": "b7", "label": "Block 7", "time": "17:50-19:20"}
+  ]
+}
