@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Kardex — {{ student.name }}{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Kardex — {{ student.name }}</h1>
+  <a href="{{ url_for('student_profile', student_id=student.id) }}" class="btn btn-secondary btn-sm">← Back to Profile</a>
+</div>
+
+{% set passed   = kardex.entries | selectattr('status', 'eq', 'Pass')    | list %}
+{% set failed   = kardex.entries | selectattr('status', 'eq', 'Fail')    | list %}
+{% set retry    = kardex.entries | selectattr('status', 'eq', 'Retry')   | list %}
+{% set forced   = kardex.entries | selectattr('status', 'eq', 'Force')   | list %}
+{% set untaken  = kardex.entries | selectattr('status', 'eq', 'Untaken') | list %}
+
+<div class="stat-grid" style="margin-bottom:1.5rem">
+  <div class="stat-card">
+    <div class="number">{{ kardex.entries | length }}</div>
+    <div class="label">Total Classes</div>
+  </div>
+  <div class="stat-card">
+    <div class="number" style="color:var(--success)">{{ passed | length }}</div>
+    <div class="label">Passed</div>
+  </div>
+  <div class="stat-card">
+    <div class="number" style="color:var(--danger)">{{ failed | length }}</div>
+    <div class="label">Failed</div>
+  </div>
+  <div class="stat-card">
+    <div class="number" style="color:var(--warning)">{{ retry | length }}</div>
+    <div class="label">Retry</div>
+  </div>
+  <div class="stat-card">
+    <div class="number" style="color:var(--info)">{{ forced | length }}</div>
+    <div class="label">Forced</div>
+  </div>
+  <div class="stat-card">
+    <div class="number" style="color:var(--text-muted)">{{ untaken | length }}</div>
+    <div class="label">Untaken</div>
+  </div>
+</div>
+
+{% if kardex.entries %}
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Status</th>
+        <th>Grade</th>
+        <th>Period</th>
+        <th>Notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in kardex.entries %}
+      <tr>
+        <td><strong>{{ entry.class_name }}</strong></td>
+        <td><span class="badge badge-{{ entry.status | lower }}">{{ entry.status }}</span></td>
+        <td>{{ entry.grade if entry.grade is not none else '—' }}</td>
+        <td>{{ entry.period or '—' }}</td>
+        <td>{{ entry.notes or '—' }}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm"
+                  onclick="toggleEdit('{{ entry.class_id }}')">Edit</button>
+        </td>
+      </tr>
+      <tr id="edit-{{ entry.class_id }}" style="display:none">
+        <td colspan="6">
+          <form method="post"
+                action="{{ url_for('update_kardex_entry', student_id=student.id) }}"
+                class="flex" style="flex-wrap:wrap;gap:.5rem;padding:.25rem 0">
+            <input type="hidden" name="class_id" value="{{ entry.class_id }}">
+            <input type="number" name="grade" step="0.01" min="0" max="10"
+                   value="{{ entry.grade if entry.grade is not none else '' }}"
+                   placeholder="Grade (0–10)" style="width:130px">
+            <input type="text" name="period"
+                   value="{{ entry.period or '' }}"
+                   placeholder="Period (e.g. 2024-1)" style="width:150px">
+            <input type="text" name="notes"
+                   value="{{ entry.notes or '' }}"
+                   placeholder="Notes" style="flex:1;min-width:180px">
+            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+            <button type="button" class="btn btn-secondary btn-sm"
+                    onclick="toggleEdit('{{ entry.class_id }}')">Cancel</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="muted">No entries in this kardex yet. Add classes to the student's career first.</p>
+{% endif %}
+
+{% if achieved_badges %}
+<div class="section-header mt-2">
+  <h2>Badges Achieved</h2>
+</div>
+<div class="card-grid">
+  {% for badge in achieved_badges %}
+  <div class="card">
+    <div class="card-title">🏆 {{ badge.name }}</div>
+    <p class="muted">{{ badge.description }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<script>
+function toggleEdit(classId) {
+  const row = document.getElementById('edit-' + classId);
+  row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+}
+</script>
+{% endblock %}

@@ -8,6 +8,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 TEACHER_DIR = os.path.join(DATA_DIR, "teacher")
 STUDENT_DIR = os.path.join(DATA_DIR, "student")
+KARDEX_DIR = os.path.join(DATA_DIR, "kardex")
 BADGES_FILE = os.path.join(DATA_DIR, "badges.json")
 PROGRESSION_FILE = os.path.join(DATA_DIR, "progression.json")
 
@@ -47,6 +48,59 @@ def _list_profiles(directory: str) -> list[dict]:
             if profile:
                 profiles.append(profile)
     return profiles
+
+
+# ── kardex helpers ───────────────────────────────────────────────────────────
+
+def _kardex_path(student_id: str) -> str:
+    return os.path.join(KARDEX_DIR, f"{student_id}.json")
+
+
+def _init_kardex(student_id: str, student_name: str) -> None:
+    """Create a blank kardex JSON for a brand-new student."""
+    path = _kardex_path(student_id)
+    if not os.path.isfile(path):
+        _save_json(path, {
+            "student_id": student_id,
+            "student_name": student_name,
+            "entries": [],
+        })
+
+
+def _sync_kardex(student: dict) -> None:
+    """Keep the kardex in sync with the student's career list.
+
+    * Adds an entry for any career class not yet in the kardex.
+    * Updates the status field to match the career (single source of truth).
+    * Never removes entries — historical records are preserved.
+    """
+    path = _kardex_path(student["id"])
+    kardex = _load_json(path)
+    if not kardex:
+        kardex = {
+            "student_id": student["id"],
+            "student_name": student["name"],
+            "entries": [],
+        }
+
+    entry_map = {e["class_id"]: e for e in kardex["entries"]}
+
+    for career_cls in student.get("career", []):
+        cid = career_cls["class_id"]
+        if cid in entry_map:
+            entry_map[cid]["status"] = career_cls["status"]
+        else:
+            entry_map[cid] = {
+                "class_id": cid,
+                "class_name": career_cls["class_name"],
+                "status": career_cls["status"],
+                "grade": None,
+                "period": None,
+                "notes": "",
+            }
+
+    kardex["entries"] = list(entry_map.values())
+    _save_json(path, kardex)
 
 
 # ── views ─────────────────────────────────────────────────────────────────────
@@ -168,6 +222,7 @@ def add_student():
         if os.path.isfile(path):
             return render_template("add_student.html", error="A student with that name already exists.")
         _save_json(path, {"id": student_id, "name": name, "career": []})
+        _init_kardex(student_id, name)
         return redirect(url_for("student_profile", student_id=student_id))
     return render_template("add_student.html", error=None)
 
@@ -186,6 +241,7 @@ def update_student_career(student_id):
     if entry:
         entry["status"] = new_status
     _save_json(path, student)
+    _sync_kardex(student)
     return redirect(url_for("student_profile", student_id=student_id))
 
 
@@ -213,8 +269,54 @@ def add_student_class(student_id):
             status = "Untaken"
         student["career"].append({"class_id": class_id, "class_name": class_name, "status": status})
         _save_json(path, student)
+        _sync_kardex(student)
         return redirect(url_for("student_profile", student_id=student_id))
     return render_template("add_student_class.html", student=student, all_classes=all_classes, statuses=CLASS_STATUSES, error=None)
+
+
+# ── kardex ────────────────────────────────────────────────────────────────────
+
+@app.route("/student/<student_id>/kardex")
+def student_kardex(student_id):
+    student_path = os.path.join(STUDENT_DIR, f"{student_id}.json")
+    if not os.path.isfile(student_path):
+        abort(404)
+    student = _load_json(student_path)
+    kardex_path = _kardex_path(student_id)
+    if not os.path.isfile(kardex_path):
+        _init_kardex(student_id, student["name"])
+        _sync_kardex(student)
+    kardex = _load_json(kardex_path)
+    badges = _load_json(BADGES_FILE).get("badges", [])
+    achieved_badges = [b for b in badges if b.get("achieved")]
+    return render_template(
+        "kardex.html",
+        student=student,
+        kardex=kardex,
+        statuses=CLASS_STATUSES,
+        achieved_badges=achieved_badges,
+    )
+
+
+@app.route("/student/<student_id>/kardex/update", methods=["POST"])
+def update_kardex_entry(student_id):
+    kardex_path = _kardex_path(student_id)
+    if not os.path.isfile(kardex_path):
+        abort(404)
+    kardex = _load_json(kardex_path)
+    class_id = request.form.get("class_id", "").strip()
+    entry = next((e for e in kardex["entries"] if e["class_id"] == class_id), None)
+    if entry is None:
+        abort(404)
+    raw_grade = request.form.get("grade", "").strip()
+    try:
+        entry["grade"] = float(raw_grade) if raw_grade else None
+    except ValueError:
+        entry["grade"] = None
+    entry["period"] = request.form.get("period", "").strip() or None
+    entry["notes"] = request.form.get("notes", "").strip()
+    _save_json(kardex_path, kardex)
+    return redirect(url_for("student_kardex", student_id=student_id))
 
 
 # ── badges & progression ──────────────────────────────────────────────────────
@@ -261,6 +363,14 @@ def api_teachers():
 @app.route("/api/students")
 def api_students():
     return jsonify(_list_profiles(STUDENT_DIR))
+
+
+@app.route("/api/student/<student_id>/kardex")
+def api_student_kardex(student_id):
+    kardex_path = _kardex_path(student_id)
+    if not os.path.isfile(kardex_path):
+        abort(404)
+    return jsonify(_load_json(kardex_path))
 
 
 @app.route("/api/badges")
