@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Teachers — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Teachers</h1>
+  <a href="{{ url_for('add_teacher') }}" class="btn btn-primary">+ Add Teacher</a>
+</div>
+
+{% if teachers %}
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Classes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in teachers %}
+      <tr>
+        <td><strong>{{ t.name }}</strong></td>
+        <td>{{ t.classes | length }}</td>
+        <td><a href="{{ url_for('teacher_profile', teacher_id=t.id) }}" class="btn btn-secondary btn-sm">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="muted">No teachers yet.</p>
+{% endif %}
+{% endblock %}

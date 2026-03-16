@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Add Class — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Add Class to {{ teacher.name }}</h1>
+  <a href="{{ url_for('teacher_profile', teacher_id=teacher.id) }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+<div class="card" style="max-width:480px">
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <form method="post">
+    <div class="form-group">
+      <label for="class_name">Class Name</label>
+      <input type="text" id="class_name" name="class_name" placeholder="e.g. Math 101" required>
+    </div>
+    <p class="muted mt-1">Status and schedule can be assigned after creation.</p>
+    <button type="submit" class="btn btn-primary mt-1">Add Class</button>
+  </form>
+</div>
+{% endblock %}

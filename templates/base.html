@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}LilClassSchedulin{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav>
+    <span class="brand">🎓 LilClassSchedulin</span>
+    <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Dashboard</a>
+    <a href="{{ url_for('teachers') }}" {% if 'teacher' in request.endpoint %}class="active"{% endif %}>Teachers</a>
+    <a href="{{ url_for('students') }}" {% if 'student' in request.endpoint %}class="active"{% endif %}>Students</a>
+    <a href="{{ url_for('badges') }}" {% if request.endpoint == 'badges' %}class="active"{% endif %}>Badges</a>
+    <a href="{{ url_for('progression') }}" {% if request.endpoint == 'progression' %}class="active"{% endif %}>Progression</a>
+  </nav>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

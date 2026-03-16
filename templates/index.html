@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — LilClassSchedulin{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="number">{{ teachers | length }}</div>
+    <div class="label">Teachers</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">{{ students | length }}</div>
+    <div class="label">Students</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">{{ badges | length }}</div>
+    <div class="label">Badges</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">{{ achieved }}</div>
+    <div class="label">Badges Achieved</div>
+  </div>
+</div>
+
+<div class="section-header">
+  <h2>Teachers</h2>
+  <a href="{{ url_for('add_teacher') }}" class="btn btn-primary btn-sm">+ Add Teacher</a>
+</div>
+<div class="card-grid">
+  {% for t in teachers %}
+  <div class="card">
+    <div class="card-title"><a href="{{ url_for('teacher_profile', teacher_id=t.id) }}">{{ t.name }}</a></div>
+    <span class="muted">{{ t.classes | length }} class(es)</span>
+  </div>
+  {% else %}
+  <p class="muted">No teachers yet. <a href="{{ url_for('add_teacher') }}">Add one</a>.</p>
+  {% endfor %}
+</div>
+
+<div class="section-header mt-2">
+  <h2>Students</h2>
+  <a href="{{ url_for('add_student') }}" class="btn btn-primary btn-sm">+ Add Student</a>
+</div>
+<div class="card-grid">
+  {% for s in students %}
+  <div class="card">
+    <div class="card-title"><a href="{{ url_for('student_profile', student_id=s.id) }}">{{ s.name }}</a></div>
+    <span class="muted">{{ s.career | length }} class(es) in career</span>
+  </div>
+  {% else %}
+  <p class="muted">No students yet. <a href="{{ url_for('add_student') }}">Add one</a>.</p>
+  {% endfor %}
+</div>
+{% endblock %}

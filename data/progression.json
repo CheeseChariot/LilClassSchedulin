@@ -1,0 +1,16 @@
+{
+  "requirements": [
+    {
+      "badge_id": "first_pass",
+      "description": "Pass at least 1 class"
+    },
+    {
+      "badge_id": "honor_roll",
+      "description": "Accumulate 5 passed classes"
+    },
+    {
+      "badge_id": "perfect_semester",
+      "description": "Complete a full semester (all classes passed, none retried)"
+    }
+  ]
+}

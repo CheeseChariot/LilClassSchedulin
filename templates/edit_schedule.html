@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Edit Schedule — LilClassSchedulin{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Edit Schedule: {{ cls.name }}</h1>
+  <a href="{{ url_for('teacher_profile', teacher_id=teacher.id) }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+<div class="card" style="max-width:560px">
+  <form method="post">
+    <div class="form-group">
+      <label>Status (leave blank for NULL)</label>
+      <input type="text" name="status" value="{{ cls.status or '' }}" placeholder="e.g. active">
+    </div>
+    <div class="form-group">
+      <label>Weekly Schedule (leave blank to skip a day)</label>
+      {% for day in days %}
+      <div class="schedule-day">
+        <span class="day-name">{{ day | capitalize }}</span>
+        <input type="text" name="{{ day }}"
+               value="{{ cls.schedule[day] if cls.schedule and day in cls.schedule else '' }}"
+               placeholder="e.g. 09:00-11:00">
+      </div>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+{% endblock %}
