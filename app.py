@@ -13,11 +13,15 @@ CLASSROOM_DIR = os.path.join(DATA_DIR, "classroom")
 BADGES_FILE = os.path.join(DATA_DIR, "badges.json")
 PROGRESSION_FILE = os.path.join(DATA_DIR, "progression.json")
 COURSES_FILE = os.path.join(DATA_DIR, "courses.json")
-SCHEBLOCKS_FILE = os.path.join(DATA_DIR, "scheblocks.json")
+SCHEDBLOCKS_FILE = os.path.join(DATA_DIR, "schedblocks.json")
+SCHEDULES_DIR = os.path.join(DATA_DIR, "schedules")
 
 CLASS_STATUSES = ["Untaken", "Pass", "Fail", "Retry", "Force"]
+CURRENT_SCHEDULE_SEMESTER = "2025_1"
+DEFAULT_SCHEDULE_GROUP = "group_1"
+WEEK_DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-# Source of truth for schedule blocks is data/scheblocks.json.
+# Source of truth for schedule blocks is data/schedblocks.json.
 
 
 def _default_badges_data() -> dict:
@@ -79,6 +83,14 @@ def _default_scheblocks_data() -> dict:
     }
 
 
+def _default_semester_schedule(semester: str) -> dict:
+    return {
+        "semester": semester,
+        "default_group": DEFAULT_SCHEDULE_GROUP,
+        "classes": [],
+    }
+
+
 def _parse_optional_int(value):
     """Return int from string/number, or None if blank/invalid."""
     if value is None:
@@ -131,25 +143,7 @@ def _normalize_teacher(data: dict, fallback_id: str) -> dict:
             continue
         seen_ids.add(class_id)
 
-        raw_schedule = cls.get("schedule")
-        schedule = None
-        if isinstance(raw_schedule, dict):
-            cleaned_schedule = {}
-            for day, value in raw_schedule.items():
-                day_name = _coerce_text(day).lower()
-                time_range = _coerce_text(value)
-                if day_name and time_range:
-                    cleaned_schedule[day_name] = time_range
-            schedule = cleaned_schedule or None
-
-        classes.append(
-            {
-                "id": class_id,
-                "name": class_name or class_id,
-                "schedule": schedule,
-                "status": _coerce_text(cls.get("status"), "") or None,
-            }
-        )
+        classes.append({"id": class_id, "name": class_name or class_id})
 
     return {"id": teacher_id, "name": name, "classes": classes}
 
@@ -335,6 +329,174 @@ def _normalize_scheblocks(data) -> dict:
     return {"blocks": blocks}
 
 
+def _normalize_semester_schedule(data, semester: str) -> dict:
+    if not isinstance(data, dict):
+        data = {}
+
+    sem_id = _safe_filename(_coerce_text(semester, CURRENT_SCHEDULE_SEMESTER)) or CURRENT_SCHEDULE_SEMESTER
+    default_group = _safe_filename(_coerce_text(data.get("default_group"), DEFAULT_SCHEDULE_GROUP))
+    if not default_group:
+        default_group = DEFAULT_SCHEDULE_GROUP
+
+    raw_classes = data.get("classes")
+    if not isinstance(raw_classes, list):
+        raw_classes = []
+
+    classes = []
+    seen_class_ids = set()
+    for schedule_class in raw_classes:
+        if not isinstance(schedule_class, dict):
+            continue
+
+        class_name = _coerce_text(schedule_class.get("class_name") or schedule_class.get("name"))
+        class_id = _safe_filename(_coerce_text(schedule_class.get("class_id") or schedule_class.get("id")) or class_name)
+        if not class_id or class_id in seen_class_ids:
+            continue
+        seen_class_ids.add(class_id)
+
+        teacher_ids = []
+        seen_teacher_ids = set()
+        raw_teacher_ids = schedule_class.get("teacher_ids")
+        if not isinstance(raw_teacher_ids, list):
+            raw_teacher_ids = schedule_class.get("teachers") if isinstance(schedule_class.get("teachers"), list) else []
+        for teacher_ref in raw_teacher_ids:
+            if isinstance(teacher_ref, dict):
+                teacher_id = _safe_filename(_coerce_text(teacher_ref.get("teacher_id") or teacher_ref.get("id")))
+            else:
+                teacher_id = _safe_filename(_coerce_text(teacher_ref))
+            if not teacher_id or teacher_id in seen_teacher_ids:
+                continue
+            seen_teacher_ids.add(teacher_id)
+            teacher_ids.append(teacher_id)
+
+        raw_times = schedule_class.get("times")
+        if not isinstance(raw_times, list):
+            raw_times = []
+
+        times = []
+        for slot in raw_times:
+            if not isinstance(slot, dict):
+                continue
+            day = _coerce_text(slot.get("day")).lower()
+            if day not in WEEK_DAYS:
+                continue
+            group = _safe_filename(_coerce_text(slot.get("group"), default_group)) or default_group
+            block = _coerce_text(slot.get("block"), "custom") or "custom"
+            normalized_slot = {
+                "day": day,
+                "block": block,
+                "group": group,
+            }
+            time_value = _coerce_text(slot.get("time"))
+            time_raw = _coerce_text(slot.get("time_raw"))
+            if time_value:
+                normalized_slot["time"] = time_value
+            elif time_raw:
+                normalized_slot["time_raw"] = time_raw
+            times.append(normalized_slot)
+
+        classes.append(
+            {
+                "class_id": class_id,
+                "class_name": class_name or class_id,
+                "teacher_ids": teacher_ids,
+                "status": _coerce_text(schedule_class.get("status"), "") or None,
+                "times": times,
+            }
+        )
+
+    classes.sort(key=lambda c: c.get("class_name", "").lower())
+
+    return {
+        "semester": _coerce_text(data.get("semester"), sem_id) or sem_id,
+        "default_group": default_group,
+        "classes": classes,
+    }
+
+
+def _find_schedule_class(schedule_data: dict, class_id: str):
+    for schedule_class in schedule_data.get("classes", []):
+        if schedule_class.get("class_id") == class_id:
+            return schedule_class
+    return None
+
+
+def _ensure_schedule_class(schedule_data: dict, class_id: str, class_name: str):
+    schedule_class = _find_schedule_class(schedule_data, class_id)
+    if schedule_class is None:
+        schedule_class = {
+            "class_id": class_id,
+            "class_name": class_name or class_id,
+            "teacher_ids": [],
+            "status": None,
+            "times": [],
+        }
+        schedule_data.setdefault("classes", []).append(schedule_class)
+    elif class_name:
+        schedule_class["class_name"] = class_name
+    return schedule_class
+
+
+def _schedule_day_map(schedule_class: dict, group: str) -> dict:
+    day_map = {}
+    raw_times = schedule_class.get("times")
+    if not isinstance(raw_times, list):
+        return day_map
+
+    for slot in raw_times:
+        if not isinstance(slot, dict):
+            continue
+        if _coerce_text(slot.get("group"), group) != group:
+            continue
+        day = _coerce_text(slot.get("day")).lower()
+        if day not in WEEK_DAYS:
+            continue
+        time_value = _coerce_text(slot.get("time")) or _coerce_text(slot.get("time_raw"))
+        if time_value:
+            day_map[day] = time_value
+    return day_map
+
+
+def _replace_schedule_group_times(schedule_class: dict, group: str, day_to_time: dict, block_by_time: dict):
+    raw_times = schedule_class.get("times")
+    if not isinstance(raw_times, list):
+        raw_times = []
+
+    kept = []
+    for slot in raw_times:
+        if not isinstance(slot, dict):
+            continue
+        if _coerce_text(slot.get("group"), group) == group:
+            continue
+        kept.append(slot)
+
+    for day in WEEK_DAYS:
+        time_value = _coerce_text(day_to_time.get(day))
+        if not time_value:
+            continue
+        block = block_by_time.get(time_value)
+        if block:
+            kept.append(
+                {
+                    "day": day,
+                    "block": block.get("id"),
+                    "group": group,
+                    "time": block.get("time"),
+                }
+            )
+        else:
+            kept.append(
+                {
+                    "day": day,
+                    "block": "custom",
+                    "group": group,
+                    "time_raw": time_value,
+                }
+            )
+
+    schedule_class["times"] = kept
+
+
 def _normalizer_for_directory(directory: str):
     if os.path.normpath(directory) == os.path.normpath(TEACHER_DIR):
         return _normalize_teacher
@@ -358,7 +520,24 @@ def _load_json(path):
 
 
 def _load_scheblocks() -> list[dict]:
-    return _normalize_scheblocks(_load_json(SCHEBLOCKS_FILE)).get("blocks", [])
+    return _normalize_scheblocks(_load_json(SCHEDBLOCKS_FILE)).get("blocks", [])
+
+
+def _schedule_path(semester: str = CURRENT_SCHEDULE_SEMESTER) -> str:
+    sem_id = _safe_filename(_coerce_text(semester, CURRENT_SCHEDULE_SEMESTER)) or CURRENT_SCHEDULE_SEMESTER
+    return os.path.join(SCHEDULES_DIR, f"{sem_id}.json")
+
+
+def _load_semester_schedule(semester: str = CURRENT_SCHEDULE_SEMESTER) -> dict:
+    sem_id = _safe_filename(_coerce_text(semester, CURRENT_SCHEDULE_SEMESTER)) or CURRENT_SCHEDULE_SEMESTER
+    return _normalize_semester_schedule(_load_json(_schedule_path(sem_id)), sem_id)
+
+
+def _save_semester_schedule(schedule_data: dict, semester: str = CURRENT_SCHEDULE_SEMESTER) -> dict:
+    sem_id = _safe_filename(_coerce_text(semester, CURRENT_SCHEDULE_SEMESTER)) or CURRENT_SCHEDULE_SEMESTER
+    normalized = _normalize_semester_schedule(schedule_data, sem_id)
+    _save_json(_schedule_path(sem_id), normalized)
+    return normalized
 
 
 def _scheblock_map(blocks: list[dict]) -> dict:
@@ -397,7 +576,7 @@ def _list_profiles(directory: str) -> list[dict]:
 
 
 def _ensure_data_layout() -> None:
-    for folder in [DATA_DIR, TEACHER_DIR, STUDENT_DIR, KARDEX_DIR, CLASSROOM_DIR]:
+    for folder in [DATA_DIR, TEACHER_DIR, STUDENT_DIR, KARDEX_DIR, CLASSROOM_DIR, SCHEDULES_DIR]:
         os.makedirs(folder, exist_ok=True)
 
     badges_data = _load_json(BADGES_FILE)
@@ -412,9 +591,18 @@ def _ensure_data_layout() -> None:
     if not isinstance(courses_data, dict) or not isinstance(courses_data.get("courses"), list):
         _save_json(COURSES_FILE, _default_courses_data())
 
-    scheblocks_data = _load_json(SCHEBLOCKS_FILE)
+    scheblocks_data = _load_json(SCHEDBLOCKS_FILE)
     if not isinstance(scheblocks_data, dict) or not isinstance(scheblocks_data.get("blocks"), list):
-        _save_json(SCHEBLOCKS_FILE, _default_scheblocks_data())
+        _save_json(SCHEDBLOCKS_FILE, _default_scheblocks_data())
+
+    semester_path = _schedule_path(CURRENT_SCHEDULE_SEMESTER)
+    semester_data = _load_json(semester_path)
+    if not isinstance(semester_data, dict) or not isinstance(semester_data.get("classes"), list):
+        _save_json(semester_path, _default_semester_schedule(CURRENT_SCHEDULE_SEMESTER))
+    else:
+        normalized_semester = _normalize_semester_schedule(semester_data, CURRENT_SCHEDULE_SEMESTER)
+        if normalized_semester != semester_data:
+            _save_json(semester_path, normalized_semester)
 
 
 # ── kardex helpers ───────────────────────────────────────────────────────────
@@ -541,6 +729,21 @@ def teacher_profile(teacher_id):
         abort(404)
     teacher = _normalize_teacher(_load_json(path), teacher_id)
     blocks = _load_scheblocks()
+    schedule_data = _load_semester_schedule()
+    default_group = _coerce_text(schedule_data.get("default_group"), DEFAULT_SCHEDULE_GROUP) or DEFAULT_SCHEDULE_GROUP
+
+    teacher_ref = teacher.get("id")
+    for cls in teacher.get("classes", []):
+        cls["schedule"] = None
+        cls["status"] = None
+        schedule_class = _find_schedule_class(schedule_data, cls.get("id"))
+        if not schedule_class:
+            continue
+        if teacher_ref not in schedule_class.get("teacher_ids", []):
+            continue
+        cls["schedule"] = _schedule_day_map(schedule_class, default_group) or None
+        cls["status"] = schedule_class.get("status")
+
     return render_template("teacher_profile.html", teacher=teacher, block_map=_scheblock_map(blocks))
 
 
@@ -576,7 +779,7 @@ def add_class(teacher_id):
                 teacher=teacher,
                 error="A class with that name already exists for this teacher.",
             )
-        new_class = {"id": class_id, "name": class_name, "schedule": None, "status": None}
+        new_class = {"id": class_id, "name": class_name}
         teacher.setdefault("classes", []).append(new_class)
         _save_json(path, teacher)
         return redirect(url_for("teacher_profile", teacher_id=teacher_id))
@@ -592,21 +795,40 @@ def edit_schedule(teacher_id, class_id):
     cls = next((c for c in teacher.get("classes", []) if c.get("id") == class_id), None)
     if cls is None:
         abort(404)
+
+    schedule_data = _load_semester_schedule()
+    default_group = _coerce_text(schedule_data.get("default_group"), DEFAULT_SCHEDULE_GROUP) or DEFAULT_SCHEDULE_GROUP
+    schedule_class = _ensure_schedule_class(schedule_data, class_id, cls.get("name"))
+
+    teacher_ref = teacher.get("id")
+    if teacher_ref and teacher_ref not in schedule_class.get("teacher_ids", []):
+        schedule_class.setdefault("teacher_ids", []).append(teacher_ref)
+
     blocks = _load_scheblocks()
-    valid_times = {block.get("time") for block in blocks if block.get("time")}
-    days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+    block_by_time = _scheblock_map(blocks)
+    valid_times = set(block_by_time.keys())
+    days = WEEK_DAYS
+
+    cls_view = {
+        "id": cls.get("id"),
+        "name": cls.get("name"),
+        "schedule": _schedule_day_map(schedule_class, default_group) or None,
+        "status": schedule_class.get("status"),
+    }
+
     if request.method == "POST":
-        schedule = {}
+        day_to_time = {}
         for day in days:
             val = request.form.get(day, "").strip()
             if val and (not valid_times or val in valid_times):
-                schedule[day] = val
-        cls["schedule"] = schedule if schedule else None
-        status = request.form.get("status", "").strip() or None
-        cls["status"] = status
-        _save_json(path, teacher)
+                day_to_time[day] = val
+
+        _replace_schedule_group_times(schedule_class, default_group, day_to_time, block_by_time)
+        schedule_class["status"] = request.form.get("status", "").strip() or None
+        _save_semester_schedule(schedule_data)
         return redirect(url_for("teacher_profile", teacher_id=teacher_id))
-    return render_template("edit_schedule.html", teacher=teacher, cls=cls, days=days, blocks=blocks)
+
+    return render_template("edit_schedule.html", teacher=teacher, cls=cls_view, days=days, blocks=blocks)
 
 
 # ── students ──────────────────────────────────────────────────────────────────
